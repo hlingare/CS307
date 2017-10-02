@@ -12,12 +12,11 @@ class CourseListView extends Component {
 
 
   render() {
-
     const { courses }  = this.state;
 
     return (
       <div>
-        <Nav />
+        <Nav auth={this.auth} {...this.props}  />
         <h3 className="text-center">Courses</h3>
         <hr/>
 

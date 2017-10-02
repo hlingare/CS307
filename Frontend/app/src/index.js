@@ -7,15 +7,28 @@ import CourseListView from './Components/CourseListView';
 import Callback from './Components/Callback';
 import { Router, Route,Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom'
+import Auth from './utils/AuthService';
+import history from './history';
 
+const auth = new Auth();
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 const Root = () => {
   return (
-   <BrowserRouter>
+   <Router history={history} component={App}>
      <Switch>
-        <Route exact path="/" component={App}/>
-        <Route path="/courses" component={CourseListView}/>
+        <Route exact path="/" render={(props) => <App auth={auth} {...props} />}/>
+        <Route path="/courses" render={(props) => <CourseListView auth={auth} {...props} />}/>
+        <Route path="/callback" render={(props) => {
+          handleAuthentication(props);
+          return <Callback {...props} />
+        }}/>
      </Switch>
-    </BrowserRouter>
+    </Router>
   )
 }
 

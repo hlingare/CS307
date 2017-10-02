@@ -7,7 +7,7 @@ class Callback extends Component {
   }
 
   componentDidMount() {
-    window.location.href = "/";
+    window.location.href = "/courses";
   }
 
   render() {
