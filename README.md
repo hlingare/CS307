@@ -1,2 +1,9 @@
 # CS307
-Gokul added this to the readme
+This is the readme 
+
+Frontend-
+
+
+
+Backend-
+	Flask:
