@@ -42,6 +42,7 @@ class App extends Component {
             </Button>
           )
       }
+      <br /> 
       {
         !isAuthenticated() && (
             <Button
