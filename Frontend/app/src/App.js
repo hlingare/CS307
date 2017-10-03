@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Button } from 'react-bootstrap';
+import { Navbar, Button, Jumbotron } from 'react-bootstrap';
 import './styles/App.css';
 
 class App extends Component {
@@ -20,53 +20,37 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Course Rec</a>
-            </Navbar.Brand>
+
+      <Jumbotron>
+        <h1 className="display-3">CourseRec</h1>
+        <p className="lead">CourseRec is an app that allows students to find course which best suits them.</p>
+      </Jumbotron>
+
+
+
+
+      {
+        !isAuthenticated() && (
             <Button
               bsStyle="primary"
               className="btn-margin"
-              onClick={this.goTo.bind(this, 'Courses')}
+              onClick={this.login.bind(this)}
             >
-              Home
+              Log In
             </Button>
-            {
-              !isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                    Log In
-                  </Button>
-                )
-            }
-            {
-              !isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                  Sign Up
-                  </Button>
-                )
-            }
-            {
-              isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.logout.bind(this)}
-                  >
-                    Log Out
-                  </Button>
-                )
-            }
-          </Navbar.Header>
-        </Navbar>
+          )
+      }
+      {
+        !isAuthenticated() && (
+            <Button
+              bsStyle="primary"
+              className="btn-margin"
+              onClick={this.login.bind(this)}
+            >
+            Sign Up
+            </Button>
+          )
+      }
       </div>
     );
   }
