@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Button, Jumbotron } from 'react-bootstrap';
+import { Navbar, Button, Jumbotron, NavItem, NavLink } from 'react-bootstrap';
 import './styles/App.css';
 
 class App extends Component {
@@ -23,7 +23,8 @@ class App extends Component {
 
       <Jumbotron>
         <h1 className="display-3">CourseRec</h1>
-        <p className="lead">CourseRec is an app that allows students to find course which best suits them.</p>
+        <p className="lead">CourseRec is an app that allows students to find course whic </p>
+
       </Jumbotron>
 
 
@@ -32,8 +33,9 @@ class App extends Component {
       {
         !isAuthenticated() && (
             <Button
+
               bsStyle="primary"
-              className="btn-margin"
+              className="btn-margin center-block"
               onClick={this.login.bind(this)}
             >
               Log In
@@ -44,7 +46,7 @@ class App extends Component {
         !isAuthenticated() && (
             <Button
               bsStyle="primary"
-              className="btn-margin"
+              className="btn-margin center-block"
               onClick={this.login.bind(this)}
             >
             Sign Up
