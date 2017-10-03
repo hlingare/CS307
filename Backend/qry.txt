@@ -1,0 +1,6 @@
+select * from student;
+select name, standing, degree from student;
+select * from student order by name;
+select * from student order by name desc;
+select count (*) from student;
+select * from student where name = "sanat";
