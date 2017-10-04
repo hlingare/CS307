@@ -7,7 +7,7 @@ class CourseListView extends Component {
 
   constructor() {
     super()
-    this.state = { courses: ['Soc100'] };
+    this.state = { courses: ['Soc100','Soc220'] };
   }
 
 

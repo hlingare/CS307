@@ -19,41 +19,34 @@ class App extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (
-      <div>
-
-      <Jumbotron>
-        <h1 className="display-3">CourseRec</h1>
-        <p className="lead">CourseRec is an app that allows students to find course whic </p>
-
-      </Jumbotron>
-
-
-
+      <div className="home-page">
+        <div className="home-page__container">
+        <h1> CourseRec </h1>
 
       {
         !isAuthenticated() && (
             <Button
 
               bsStyle="primary"
-              className="btn-margin center-block"
+              className="login_button"
               onClick={this.login.bind(this)}
             >
               Log In
             </Button>
           )
       }
-      <br /> 
       {
         !isAuthenticated() && (
             <Button
               bsStyle="primary"
-              className="btn-margin center-block"
+              className="signup_button"
               onClick={this.login.bind(this)}
             >
             Sign Up
             </Button>
           )
       }
+        </div>
       </div>
     );
   }
