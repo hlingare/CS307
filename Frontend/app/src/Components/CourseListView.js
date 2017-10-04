@@ -7,7 +7,8 @@ class CourseListView extends Component {
 
   constructor() {
     super()
-    this.state = { courses: ['Soc100','Soc220'] };
+    this.state = { courses: ['Soc100','Soc220','Soc300'] };
+    //need to connect database to get database
   }
 
 
