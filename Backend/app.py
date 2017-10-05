@@ -1,5 +1,5 @@
 # ./app.py
-from flask import Flask
+from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 
@@ -16,12 +16,18 @@ def hello():
 def prereg():
       sql = text("SELECT * FROM course")
       result = db.engine.execute(sql)
-      names = []
+      results = []
       for row in result:
-        names.append(row[0])
-        return names[0]
+          obj = {
+            'id': row.idcourse,
+            'title': row.name,
+          }
+          results.append(obj)
+
+      response = jsonify(results)
+      response.status_code = 200
+      return response
 
 if __name__ == '__main__':
-          #port = 8000 #the custom port you want
-          #app.run(host='0.0.0.0', port=port)
-          app.run(debug=True)
+          port = 8000 #the custom port you want
+          app.run(host='0.0.0.0', port=port)
