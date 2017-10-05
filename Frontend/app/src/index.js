@@ -9,6 +9,7 @@ import { Router, Route,Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom'
 import Auth from './utils/AuthService';
 import history from './history';
+import Profile from './Components/Profile';
 
 const auth = new Auth();
 
@@ -27,6 +28,7 @@ const Root = () => {
           handleAuthentication(props);
           return <Callback {...props} />
         }}/>
+        <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />}/>
      </Switch>
     </Router>
   )
