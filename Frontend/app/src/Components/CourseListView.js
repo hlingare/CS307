@@ -12,7 +12,7 @@ class CourseListView extends Component {
 }
 
 //ajax request
- componentWillMount() {
+/** componentWillMount() {
 	var self = this;
 	fetch('https://localhost:3000/testinp.txt')
 	.then(function(response) {
@@ -25,9 +25,18 @@ class CourseListView extends Component {
 			courses: JSON.parse(body).courselist
 		});
 	});
- }
+ }*/
 
-
+componentWillMount() {
+	var request = require('axios');
+	axios.get('https://www.purdue.edu')
+	.then(function (response) {
+	console.log(response);
+	})
+	.catch(function (error) {
+	console.log(error);
+	});
+}
 
 
 
