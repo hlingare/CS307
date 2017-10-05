@@ -22,6 +22,13 @@ class Profile extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
+  sendEmail(message) {
+    var email = message.emailId;
+    var subject = message.subject;
+    var emailBody = 'Hi '+message.from;
+    document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
+  }
+
   handleOpenModal () {
     this.setState({ showModal: true });
   }
@@ -65,9 +72,11 @@ class Profile extends Component {
               </ReactModal>
             </div>
             <br />
-            <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
-              Send Email to Web
-            </Button>
+
+            <a className = "App" href="mailto:someone@yoursite.com?subject=Mail from Our Site">Email Us if you are having trouble with the app.</a>
+
+
+
         </div>
 
 

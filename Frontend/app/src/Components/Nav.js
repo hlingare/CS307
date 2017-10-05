@@ -14,21 +14,15 @@ class Nav extends Component {
   render() {
     return (
         <ul className="nav navbar-nav navbar-right">
-        <Button
-          bsStyle="primary"
-          className="btn-margin"
-          onClick={this.logout.bind(this)}
-        >
+
+        <Button bsStyle="primary" className="btn-margin" onClick={this.logout.bind(this)}>
           Log Out
         </Button>
 
-        <Button
-          bsStyle="primary"
-          className="btn-margin"
-          onClick={this.goTo.bind(this)}
-        >
+        <Button bsStyle="primary" className="btn-margin" onClick={this.goTo.bind(this)}>
           User Profile
         </Button>
+
         </ul>
     );
   }

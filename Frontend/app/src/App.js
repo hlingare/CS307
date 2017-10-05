@@ -32,7 +32,7 @@ class App extends Component {
         !isAuthenticated() && (
             <Button
               bsStyle="primary"
-              className="signup_button"
+              className="hmsignup_button"
               onClick={this.login.bind(this)}
             >
             Sign Up
