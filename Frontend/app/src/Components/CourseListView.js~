@@ -14,7 +14,6 @@ class CourseListView extends Component {
   getCourseList() {
 	getCourseData().then((courses) => {
 		this.setState({ courses });
-		console.log( courses );
 	});
   }
 

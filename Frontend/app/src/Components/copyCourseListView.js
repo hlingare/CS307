@@ -14,7 +14,6 @@ class CourseListView extends Component {
   getCourseList() {
 	getCourseData().then((courses) => {
 		this.setState({ courses });
-		console.log( courses );
 	});
   }
 
@@ -33,15 +32,8 @@ class CourseListView extends Component {
 
         { courses.map((course, index) => (
               <div className="col-sm-6" key={index}>
-		<div className="panel panel-danger">
-		<div className="panel-heading">
-		<h3 className="panel-title"><span className="btn">#{ course.id }</span></h3>
+              {course}
               </div>
-		<div className="panel-body">
-		 <p> { course.course } </p>
-		</div>
-		</div>
-		</div>
           ))}
           </div>
     );
