@@ -1,14 +1,35 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Nav from './Nav';
+//import axios from 'axios';
 
 
 class CourseListView extends Component {
 
   constructor() {
     super()
-    this.state = { courses: ['Soc100'] };
-  }
+    this.state = { courses: ['EAPS100'] };
+	  //ajax 
+}
+
+//ajax request
+ componentWillMount() {
+	var self = this;
+	fetch('https://localhost:3000/testinp.txt')
+	.then(function(response) {
+		if() {
+		} else {
+		}	
+	})
+	.then(function(body) {
+		self.setState({
+			courses: JSON.parse(body).courselist
+		});
+	});
+ }
+
+
+
 
 
   render() {
