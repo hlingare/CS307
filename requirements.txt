@@ -7,3 +7,4 @@ SQLAlchemy==1.1.9
 flask-sqlalchemy
 Werkzeug==0.12.2
 psycopg2
+flask-cors
