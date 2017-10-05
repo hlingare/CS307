@@ -3,16 +3,9 @@ import { Navbar, Button, Jumbotron, NavItem, NavLink } from 'react-bootstrap';
 import './styles/App.css';
 
 class App extends Component {
-  goTo(route) {
-    this.props.history.replace(`/`)
-  }
 
   login() {
     this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
   }
 
   render() {

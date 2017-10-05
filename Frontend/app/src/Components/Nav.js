@@ -7,6 +7,9 @@ class Nav extends Component {
   logout() {
       this.props.auth.logout();
   }
+  goTo() {
+    history.replace('/profile');
+  }
 
   render() {
     return (
@@ -17,6 +20,14 @@ class Nav extends Component {
           onClick={this.logout.bind(this)}
         >
           Log Out
+        </Button>
+
+        <Button
+          bsStyle="primary"
+          className="btn-margin"
+          onClick={this.goTo.bind(this)}
+        >
+          User Profile
         </Button>
         </ul>
     );

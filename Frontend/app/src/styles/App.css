@@ -61,6 +61,15 @@
           transition-duration: 0.25s;
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: yellow;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
