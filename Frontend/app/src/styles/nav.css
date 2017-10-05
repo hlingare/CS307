@@ -1,0 +1,17 @@
+.nav{
+  float: right;
+}
+
+.btn-logout{
+  margin-right: 10px;
+  margin-top: 16px;
+  background: white;
+  color: #006be5;
+}
+
+.btn-user{
+  margin-right: 4px;
+  margin-top: 16px;
+  background: white;
+  color: #006be5;
+}

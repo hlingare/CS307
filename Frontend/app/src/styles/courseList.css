@@ -1,0 +1,22 @@
+.container {
+  background: #006be5;
+  width: 100%;
+}
+.text-center{
+  align-items: center;
+  color: white;
+  font-weight: 500;
+}
+
+.list {
+  width: 300px;
+     border: 2px solid green;
+     padding: 25px;
+     margin: 25px;
+}
+.courseName {
+  padding: 5px;
+}
+.recommend {
+  float: right;
+}
