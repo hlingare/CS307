@@ -8,8 +8,7 @@ class CourseListView extends Component {
 
   constructor() {
     super()
-    this.state = { courses: ['EAPS100'] };
-	  //ajax 
+    this.state = { courses: ['EAPS100'] }; 
 }
 
 //ajax request
