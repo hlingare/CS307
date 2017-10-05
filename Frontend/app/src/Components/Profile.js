@@ -35,40 +35,42 @@ class Profile extends Component {
 
       <div className="home-page">
         <div className="profile__container">
-            <img className="circular_image" src="https://i.pinimg.com/564x/7f/39/29/7f3929dd34913078c4c9db9ead3e5df5.jpg" />
-            <h1> @frankMurray </h1>
-            <Button disabled bsStyle="primary" className="profile_button">
+            <br />
+            <br />
+            <img className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
+            <center><h1> @frankMurray </h1></center>
+            <Button disabled bsStyle="primary" className="signup_button">
               Frank Muurray
             </Button>
 
             <br />
-            <br />
-
             <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
               Change Password
             </Button>
 
+            <div>
             <br />
+              <button bsStyle="primary" className="signup_button" onClick={this.handleOpenModal}>
+              Add Courses
+              </button>
+              <ReactModal isOpen={this.state.showModal} contentLabel="Minimal Modal Example">
+                <form>
+                  <label>
+                    Courses:
+                    <input type="text" name="Courses" />
+                  </label>
+                  <input type="submit" value="Submit" />
+                </form>
+                <button onClick={this.handleCloseModal}>Close Modal</button>
+              </ReactModal>
+            </div>
             <br />
-
-            <Button bsStyle="primary" className="signup_button">
-              Add a new class
+            <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
+              Send Email to Web
             </Button>
         </div>
 
-        <div>
-          <button onClick={this.handleOpenModal}>Trigger Modal</button>
-          <ReactModal isOpen={this.state.showModal} contentLabel="Minimal Modal Example">
-            <form>
-              <label>
-                Courses:
-                <input type="text" name="Courses" />
-              </label>
-              <input type="submit" value="Submit" />
-            </form>
-            <button onClick={this.handleCloseModal}>Close Modal</button>
-          </ReactModal>
-        </div>
+
 
       </div>
     );

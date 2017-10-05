@@ -2,8 +2,31 @@
   text-align: center;
 }
 
+.circular_image {
+  /* display items as block elements, inline positioning */
+  display: inline-block;
+  /* set the height of the image */
+  height: 300px;
+  /* hide the link text */
+  text-indent: -9999px;
+  /* set the width of the image */
+  width: 300px;
+  text-align: center;
+  /* use a radius to make the image into a circular shape */
+  border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+  margin: auto;
+  display: block;
+  /* Add shadow to the box */
+  box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+
 .home-page {
-  height: 100vh;
+  height: 105vh;
   background: #006be5;
   background: -webkit-linear-gradient(top left, #006be5 0%, #53e3a6 100%);
   background: -moz-linear-gradient(top left, #006be5 0%, #53e3a6 100%);
@@ -57,9 +80,14 @@
   width: 250px;
   cursor: pointer;
   font-size: 18px;
+  text-align: center;
+  margin: auto;
+  display: block;
   -webkit-transition-duration: 0.25s;
           transition-duration: 0.25s;
 }
+
+
 
 .modal {
   position: absolute;
