@@ -2,6 +2,65 @@
   text-align: center;
 }
 
+.home-page {
+  height: 100vh;
+  background: #006be5;
+  background: -webkit-linear-gradient(top left, #006be5 0%, #53e3a6 100%);
+  background: -moz-linear-gradient(top left, #006be5 0%, #53e3a6 100%);
+  background: -o-linear-gradient(top left, #006be5 0%, #53e3a6 100%);
+  background: linear-gradient(to bottom right, #006be5 0%, #53e3a6 100%);
+}
+.home-page__container {
+  max-width: 600px;
+	margin: 0 auto;
+	padding: 80px 0;
+	height: 400px;
+	text-align: center;
+  color: white;
+
+	h1{
+		transition-duration: 1s;
+		transition-timing-function: ease-in-put;
+		font-weight: 200;
+    color: white;
+	}
+}
+
+.login_button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  color: #53e3a6;
+  border-radius: 3px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+  margin-right: 50px;
+}
+
+.signup_button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  color: #53e3a6;
+  border-radius: 3px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -9,16 +68,10 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
   padding: 20px;
   color: white;
 }
 
 .App-intro {
   font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

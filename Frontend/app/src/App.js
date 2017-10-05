@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Button } from 'react-bootstrap';
+import { Navbar, Button, Jumbotron, NavItem, NavLink } from 'react-bootstrap';
 import './styles/App.css';
 
 class App extends Component {
@@ -19,54 +19,34 @@ class App extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Course Rec</a>
-            </Navbar.Brand>
+      <div className="home-page">
+        <div className="home-page__container">
+        <h1> CourseRec </h1>
+
+      {
+        !isAuthenticated() && (
+            <Button
+
+              bsStyle="primary"
+              className="login_button"
+              onClick={this.login.bind(this)}
+            >
+              Log In
+            </Button>
+          )
+      }
+      {
+        !isAuthenticated() && (
             <Button
               bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'Courses')}
+              className="signup_button"
+              onClick={this.login.bind(this)}
             >
-              Home
+            Sign Up
             </Button>
-            {
-              !isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                    Log In
-                  </Button>
-                )
-            }
-            {
-              !isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                  Sign Up
-                  </Button>
-                )
-            }
-            {
-              isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.logout.bind(this)}
-                  >
-                    Log Out
-                  </Button>
-                )
-            }
-          </Navbar.Header>
-        </Navbar>
+          )
+      }
+        </div>
       </div>
     );
   }
