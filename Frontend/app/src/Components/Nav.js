@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
 import history from '../history';
+import '../styles/nav.css';
 
 class Nav extends Component {
   logout() {
@@ -13,13 +14,13 @@ class Nav extends Component {
 
   render() {
     return (
-        <ul className="nav navbar-nav navbar-right">
+        <ul className="nav">
 
-        <Button bsStyle="primary" className="btn-margin" onClick={this.logout.bind(this)}>
+        <Button bsStyle="primary" className="btn-logout" onClick={this.logout.bind(this)}>
           Log Out
         </Button>
 
-        <Button bsStyle="primary" className="btn-margin" onClick={this.goTo.bind(this)}>
+        <Button bsStyle="primary" className="btn-user" onClick={this.goTo.bind(this)}>
           User Profile
         </Button>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Nav from './Nav';
+import '../styles/courseList.css';
 import { getCourseData } from '../utils/api';
 
 
@@ -26,16 +27,19 @@ componentDidMount() {
     console.log(courses);
 
     return (
-      <div>
+    <div>
+      <div className="container">
         <Nav auth={this.auth} {...this.props}  />
         <h3 className="text-center">Courses</h3>
-        <hr/>
-
+          </div>
+          <div className="list">
         { courses.map((course, index) => (
-              <div className="col-sm-6" key={course.id}>
-              {course.title}
+              <div className="courseName" key={course.id}>
+              <span>{course.title}</span>
+              <span className="recommend">{'RECOMMENDED'}</span>
               </div>
           ))}
+          </div>
           </div>
     );
   }
