@@ -4,7 +4,5 @@ itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==0.23
 SQLAlchemy==1.1.9
-flask-sqlalchemy
 Werkzeug==0.12.2
-psycopg2
-flask-cors
+
