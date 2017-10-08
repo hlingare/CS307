@@ -8,4 +8,6 @@ flask-sqlalchemy
 Werkzeug==0.12.2
 psycopg2
 flask-cors
-
+numpy==1.8.0rc1
+scipy==0.13.0b1
+scikit-learn
