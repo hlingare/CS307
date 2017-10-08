@@ -5,7 +5,7 @@ from sqlalchemy import text
 from flask_cors import CORS
 from database_connector import read
 from machine_learning_service import ml_train, ml_predict, normalize
-from sklearn.neighbors import neighbors
+from sklearn import neighbors
 #from sklearn import neighbors
 import psycopg2
 
