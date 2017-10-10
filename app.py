@@ -55,6 +55,26 @@ def showCourse(ID):
 def test_html(user):
     return render_template('hello.html', name = user)
 
+@app.route('/displayAll')
+def displayAll():
+    sql2 = "select a.username, a.fname, a.lname, a.dob, a.email, a.timecreated, a.major, a.credit_hours, a.degree, b.code, b.name, b.description from student a, course b, student_course c where c.studentid=a.idstudent and c.courseid=b.idcourse"
+    sql = text(sql2)
+    result = db.engine.execute(sql)
+    results = []
+    for row in result:
+        obj = {
+            #'id': row.idstudent_course,
+            'studentid': row.username,
+            'courseid': row.name,
+            #'rank': row.rank,
+            #'year': row.year,
+            #'semester': row.semester,
+        }
+        results.append(obj)
+
+    response = jsonify(results)
+    response.status_code = 200
+    return response
 
 @app.route('/result_list')
 def result_list():
