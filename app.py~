@@ -1,5 +1,5 @@
 # ./app.py
-from flask import Flask,jsonify,render_template
+from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_cors import CORS
@@ -34,8 +34,8 @@ def prereg():
       response.status_code = 200
       return response
 
-@app.route('/showCourse/<int:ID>')
-def showCourse(ID):
+@app.route('/showCourse<int:ID>')
+def showCourse():
       sql2 = "SELECT * FROM course where idcourse = %d " % ID
       sql = text(sql2)
       result = db.engine.execute(sql)
@@ -50,11 +50,6 @@ def showCourse(ID):
       response = jsonify(results)
       response.status_code = 200
       return response
-
-@app.route('/test_html/<user>')
-def test_html(user):
-    return render_template('hello.html', name = user)
-
 
 @app.route('/result_list')
 def result_list():
