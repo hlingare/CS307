@@ -8,4 +8,5 @@ flask-sqlalchemy
 Werkzeug==0.12.2
 psycopg2
 flask-cors
+sklearn
 
