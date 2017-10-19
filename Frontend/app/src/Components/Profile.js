@@ -42,13 +42,14 @@ class Profile extends Component {
     alert("Course Was Added");
   }
 
-  check()
+  checkCourse()
   {
       if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
       {
           alert("Please Enter a File Name");
           return false;
       }
+      alert("Course has Been Added");
       return true;
   }
 
@@ -82,20 +83,14 @@ class Profile extends Component {
 
 
 
-            <form name="frm" className="signup_button">
-                <p>Add Courses you Have Taken</p>
-                <input type="text"/>
-                <button onClick={this.showAlert}>Submit</button>
-            </form>
-            <br />
 
 
 
 
-
-            <form name="frm1" id="frm1">
+            <form name="frm1" id="frm1" className="signup_button" >
+              <p>Add Courses you Have Taken</p>
               <input type="text" name="FileName" id="FileName"/>
-              <input type="submit" value="send" name="btn_move" id="btn_move" onClick={this.check}/>
+              <input type="submit" value="send" name="btn_move" id="btn_move" onClick={this.checkCourse}/>
             </form>
 
 
