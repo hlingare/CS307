@@ -2,7 +2,15 @@ import axios from 'axios';
 
 export {getCourseData};
 
+
 function getCourseData() {
-  const url = `https://gentle-coast-95666.herokuapp.com/prereg`;
+  const url = `https://courserec.herokuapp.com/prereg`;
   return axios.get(url).then(response => response.data);
 }
+
+function getProfileData() {
+	const url = `https://courserec.herokuapp.com/prereg`;
+	  return axios.get(url).then(response => response.data);
+}
+
+
