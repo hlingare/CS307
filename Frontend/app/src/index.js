@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Auth from './utils/AuthService';
 import history from './history';
 import Profile from './Components/Profile';
+import Courses from './Components/Courses';
 
 const auth = new Auth();
 
@@ -23,12 +24,13 @@ const Root = () => {
    <Router history={history} component={App}>
      <Switch>
         <Route exact path="/" render={(props) => <App auth={auth} {...props} />}/>
+        <Route exact path="/courselist" render={(props) => <Courses auth={auth} {...props} />}/>
         <Route path="/courses" render={(props) => <CourseListView auth={auth} {...props} />}/>
         <Route path="/callback" render={(props) => {
           handleAuthentication(props);
           return <Callback {...props} />
         }}/>
-        <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />}/>
+      <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} onEnter={() => auth.requireAuth()}/>
      </Switch>
     </Router>
   )

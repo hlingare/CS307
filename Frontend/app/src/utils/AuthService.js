@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js';
 
 import history from '../history';
+import { postUserData } from './api';
 
 export default class AuthService {
   auth0 = new auth0.WebAuth({
@@ -9,7 +10,7 @@ export default class AuthService {
     redirectUri: 'http://localhost:3000/callback',
     audience: 'https://gymbuddyios.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile'
   });
 
   constructor() {
@@ -21,30 +22,55 @@ export default class AuthService {
 
 
   login() {
+    console.log('login');
     this.auth0.authorize();
   }
   handleAuthentication() {
+    console.log('handle');
+    debugger;
       this.auth0.parseHash((err, authResult) => {
+          debugger;
+        console.log('inside handle')
         if (authResult && authResult.accessToken && authResult.idToken) {
+          debugger;
+          this.getUserInfo(authResult);
+          debugger;
           this.setSession(authResult);
           history.replace('/courses');
         } else if (err) {
-          history.replace('/courses');
+          //history.replace('/courses');
           console.log(err);
         }
       });
+
+
     }
 
     setSession(authResult) {
+      console.log('session');
       // Set the time that the access token will expire at
       let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('expires_at', expiresAt);
       // navigate to the home route
-      history.replace('/courses');
+    //  history.replace('/courses');
     }
 
+    getUserInfo(authResult){
+
+    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+      console.log('user');
+      if(profile) {
+          console.log(profile);
+          localStorage.setItem('user', profile);
+          postUserData(profile.sub);
+      }
+      if(err){
+        console.log('rekt');
+      }
+    });
+}
     logout() {
       // Clear access token and ID token from local storage
       localStorage.removeItem('access_token');
@@ -60,4 +86,9 @@ export default class AuthService {
       let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
       return new Date().getTime() < expiresAt;
     }
+    requireAuth() {
+      if (!this.isAuthenticated()) {
+        history.replace('/');
+      }
+}
 }

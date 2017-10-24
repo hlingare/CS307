@@ -1,14 +1,13 @@
 import { Component } from 'react';
 
-class Callback extends Component {
+class Courses extends Component {
 
   constructor() {
     super()
   }
 
   componentDidMount() {
-    console.log(this.props);
-    debugger;
+    console.log("courses");
     //window.location.href = "/courses";
   }
 
@@ -17,4 +16,4 @@ class Callback extends Component {
   }
 }
 
-export default Callback;
+export default Courses;

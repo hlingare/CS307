@@ -20,7 +20,7 @@ def hello():
 
 @app.route('/prereg')
 def prereg():
-      sql = text("SELECT * FROM course")
+      sql = text("SELECT * FROM Course")
       result = db.engine.execute(sql)
       results = []
       for row in result:
