@@ -46,10 +46,10 @@ class Profile extends Component {
   {
       if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
       {
-          alert("Please Enter a File Name");
+          alert("Please Enter a Course Name");
           return false;
       }
-      alert("Course has Been Added");
+      alert("Course "+document.getElementById('FileName').value+" has been added!");
       return true;
   }
 
@@ -77,20 +77,17 @@ class Profile extends Component {
             <Button bsStyle="primary" className="signup_button">
               Frank Muurray
             </Button>
+
+            <br/>
+            <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
+              Change Password
+            </Button>
             <br/>
 
-
-
-
-
-
-
-
-
-            <form name="frm1" id="frm1" className="signup_button" >
+            <form name="frm1" id="frm1" className="signup_button">
               <p>Add Courses you Have Taken</p>
-              <input type="text" name="FileName" id="FileName"/>
-              <input type="submit" value="send" name="btn_move" id="btn_move" onClick={this.checkCourse}/>
+              <input type="text" name="FileName" id="FileName" />
+              <input type="submit" name="btn_move" id="btn_move" onClick={this.checkCourse}/>
             </form>
 
 
