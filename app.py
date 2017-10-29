@@ -87,9 +87,9 @@ def studentinfo(text):
         recommended = words[4]
         uuid = words[5]
         courseid = words[6]
-        print courseid
-        print usrname
-        print type(uuid)
+        #print courseid
+        #print usrname
+        #print type(uuid)
         query = "INSERT INTO student (username, name, taken_course, option, recommended, uuid, courseid) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cur.execute(query, (usrname, name, taken_course, option, recommended, uuid, courseid))
         con.commit()
