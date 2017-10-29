@@ -73,7 +73,7 @@ def result_list():
         if con:
             con.close()
 
-@app.route('/showStudent/<text>')
+@app.route('/showStudent/<text>)
 def studentinfo(text):
     con = None
     try:
