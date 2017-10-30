@@ -50,6 +50,7 @@ class Profile extends Component {
           return false;
       }
       alert("Course "+document.getElementById('FileName').value+" has been added!");
+
       return true;
   }
 
@@ -87,7 +88,10 @@ class Profile extends Component {
             <form name="frm1" id="frm1" className="signup_button">
               <p>Add Courses you Have Taken</p>
               <input type="text" name="FileName" id="FileName" />
-              <input type="submit" name="btn_move" id="btn_move" onClick={this.checkCourse}/>
+              <br/>
+              <Button onClick={this.checkCourse.bind(this)}>
+                Submit
+              </Button>
             </form>
 
 
