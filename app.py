@@ -104,9 +104,7 @@ def courseInfo():
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         text = request.data
-        print(text,"text")
         dart = json.loads(text)
-        print(dart,"DART")
         uid = dart["userId"]
         currentUID = (uid,)
         course_name = dart["course_name"]
