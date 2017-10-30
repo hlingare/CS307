@@ -8,6 +8,9 @@ from machine_learning_service import ml_train, ml_predict, normalize
 from sklearn import neighbors
 import psycopg2
 from flask import request
+import json
+from json import JSONEncoder
+from json import JSONDecoder
 
 app = Flask(__name__)
 CORS(app)
@@ -74,18 +77,27 @@ def result_list():
         if con:
             con.close()
 
-@app.route('/showStudent/<text>')
-def studentinfo(text):
+@app.route('/showStudent', methods=['POST'])
+def studentinfo():
     con = None
     taken_course = []
     option = []
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
-        args = text.split(",")
-        uid = args[0]
-        username = args[1]
-        name = args[2]
+        text = request.data
+        print(text, "abcabc")
+        jsonString = JSONEncoder().encode({
+            "data": text
+        })
+        print(jsonString, "ghghg")
+        pyDictionary = JSONDecoder().decode(jsonString)
+        dart = pyDictionary['data']
+        dataDart = dart.split(':')
+        print(dataDart[1],"uid")
+        uid = dataDart[1]
+        username = "Mad Max"
+        name = "Elevel"
         query = "INSERT INTO student (uid, username, name, taken_course, option) VALUES (%s, %s, %s, %s, %s)"
         cur.execute(query, (uid, username, name, taken_course, option))
         con.commit()
