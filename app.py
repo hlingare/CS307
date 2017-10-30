@@ -208,7 +208,7 @@ def courseInfo():
         else:
             return "Course Exists!!"
         C = reads[0][2]
-        cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uuid), ))
+        cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
         con.commit()
         return reads
     finally:
