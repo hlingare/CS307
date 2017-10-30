@@ -22,19 +22,12 @@ export default class AuthService {
 
 
   login() {
-    console.log('login');
     this.auth0.authorize();
   }
   handleAuthentication() {
-    console.log('handle');
-    debugger;
       this.auth0.parseHash((err, authResult) => {
-          debugger;
-        console.log('inside handle')
         if (authResult && authResult.accessToken && authResult.idToken) {
-          debugger;
           this.getUserInfo(authResult);
-          debugger;
           this.setSession(authResult);
           history.replace('/courses');
         } else if (err) {
@@ -47,7 +40,6 @@ export default class AuthService {
     }
 
     setSession(authResult) {
-      console.log('session');
       // Set the time that the access token will expire at
       let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       localStorage.setItem('access_token', authResult.accessToken);
@@ -60,11 +52,11 @@ export default class AuthService {
     getUserInfo(authResult){
 
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-      console.log('user');
       if(profile) {
           console.log(profile);
           localStorage.setItem('user', profile);
-          postUserData(profile.sub);
+          var userid = profile.sub.split('|');
+          postUserData(userid[1]);
       }
       if(err){
         console.log('rekt');

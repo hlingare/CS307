@@ -8,8 +8,6 @@ class Callback extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    debugger;
-    //window.location.href = "/courses";
   }
 
   render() {

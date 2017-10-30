@@ -24,7 +24,7 @@ const Root = () => {
    <Router history={history} component={App}>
      <Switch>
         <Route exact path="/" render={(props) => <App auth={auth} {...props} />}/>
-        <Route exact path="/courselist" render={(props) => <Courses auth={auth} {...props} />}/>
+        <Route exact path="/listcourse" render={(props) => <Courses auth={auth} {...props} />}/>
         <Route path="/courses" render={(props) => <CourseListView auth={auth} {...props} />}/>
         <Route path="/callback" render={(props) => {
           handleAuthentication(props);

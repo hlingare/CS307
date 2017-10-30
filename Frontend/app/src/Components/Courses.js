@@ -1,18 +1,15 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+
+import history from '../history';
+import '../styles/nav.css';
 
 class Courses extends Component {
 
-  constructor() {
-    super()
-  }
-
-  componentDidMount() {
-    console.log("courses");
-    //window.location.href = "/courses";
-  }
-
   render() {
-    return null;
+    return (
+      <div>"GG"</div>
+    );
   }
 }
 
