@@ -56,7 +56,8 @@ export default class AuthService {
           console.log(profile);
           localStorage.setItem('user', profile);
           var userid = profile.sub.split('|');
-          postUserData(userid[1]);
+          var name = profile.nickname;
+          postUserData(userid[1],name);
       }
       if(err){
         console.log('rekt');
