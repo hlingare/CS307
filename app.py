@@ -7,6 +7,10 @@ from database_connector import read
 from machine_learning_service import ml_train, ml_predict, normalize
 from sklearn import neighbors
 import psycopg2
+from flask import request
+import json
+from json import JSONEncoder
+from json import JSONDecoder
 
 app = Flask(__name__)
 CORS(app)
@@ -73,8 +77,63 @@ def result_list():
         if con:
             con.close()
 
+@app.route('/showStudent', methods=['POST'])
+def studentinfo():
+    con = None
+    taken_course = []
+    option = []
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        text = request.data
+        dart = json.loads(text)
+        uid = dart["userId"]
+        username = dart["name"]
+        query = "INSERT INTO student (uid, username, taken_course, option) VALUES (%s, %s, %s, %s)"
+        cur.execute(query, (uid, username, taken_course, option))
+        con.commit()
+        response.status_code = 200
+        return response
+    finally:
+        if con:
+            con.close()
+@app.route ('/showCourse', methods=['POST'])
+def courseInfo():
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        text = request.data
+        dart = json.loads(text)
+        uid = dart["userId"]
+        currentUID = (uid,)
+        course_name = dart["course_name"]
+        cur.execute("SELECT * FROM student WHERE %s = uid",currentUID)
+        rows = cur.fetchall()
+        temp = []
+        for row in rows:
+             temp.append(list(row))
+        reads = []
+        for i in range(0, len(temp)):
+             temps = []
+             for j in range(0, len(temp[i])):
+                 temps.append(temp[i][j])
+             reads.append(temps)
+        if(len(reads) == 0):
+           return "ERROR"
+        if course_name not in reads[0][2]:
+            reads[0][2].append(course_name)
+        else:
+            return "Course Exists!!"
+        C = reads[0][2]
+        cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uuid), ))
+        con.commit()
+        return reads
+    finally:
+        if con:
+            con.close()
 
 if __name__ == '__main__':
-          port = 8000 #the custom port you want
+          port = 5000 #the custom port you want
           app.run(debug=True)
           #app.run(host='0.0.0.0', port=port)
