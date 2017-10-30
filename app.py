@@ -132,7 +132,56 @@ def courseInfo():
     finally:
         if con:
             con.close()
+@app.route('/getCourse', methods = ['GET'])
+def course():
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        #words = text.split(",")
+        #courseId = words[0]
+        text = request.data
+        dart = json.loads(text)
+        courseId = dart["courseId"]
+        currentCourseId = (courseId,)
+        cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = idcourse", currentCourseId)
+        result = []
+        res = cur.fetchall()
+        result.append(res)
 
+        #results.append(list(res))
+
+        response = jsonify(result)
+        response.status_code = 200
+        return response
+    finally:
+        if con:
+            con.close()
+@app.route('/getUserName', methods = ['GET'])
+def getusername():
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        #words = text.split(",")
+        #uid = words[0]
+        text = request.data
+        dart = json.loads(text)
+        uid = dart["uid"]
+        currentUID = (uid,)
+        cur.execute("SELECT username FROM student WHERE %s = uid", currentUID)
+        result = []
+        res = cur.fetchall()
+        result.append(res)
+
+        #results.append(list(res))
+
+        response = jsonify(result)
+        response.status_code = 200
+        return response
+    finally:
+        if con:
+            con.close()
 if __name__ == '__main__':
           port = 5000 #the custom port you want
           app.run(debug=True)
