@@ -9,7 +9,7 @@ class Nav extends Component {
       this.props.auth.logout();
   }
   goTo() {
-    history.replace('/profile');
+    history.push('/profile');
   }
 
   render() {

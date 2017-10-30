@@ -24,7 +24,7 @@ def hello():
 
 @app.route('/prereg')
 def prereg():
-      sql = text("SELECT * FROM course")
+      sql = text("SELECT * FROM Course")
       result = db.engine.execute(sql)
       results = []
       for row in result:
@@ -86,21 +86,14 @@ def studentinfo():
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         text = request.data
-        print(text, "abcabc")
-        jsonString = JSONEncoder().encode({
-            "data": text
-        })
-        print(jsonString, "ghghg")
-        pyDictionary = JSONDecoder().decode(jsonString)
-        dart = pyDictionary['data']
-        dataDart = dart.split(':')
-        print(dataDart[1],"uid")
-        uid = dataDart[1]
-        username = "Mad Max"
-        name = "Elevel"
-        query = "INSERT INTO student (uid, username, name, taken_course, option) VALUES (%s, %s, %s, %s, %s)"
-        cur.execute(query, (uid, username, name, taken_course, option))
+        dart = json.loads(text)
+        uid = dart["userId"]
+        username = dart["name"]
+        query = "INSERT INTO student (uid, username, taken_course, option) VALUES (%s, %s, %s, %s)"
+        cur.execute(query, (uid, username, taken_course, option))
         con.commit()
+        response.status_code = 200
+        return response
     finally:
         if con:
             con.close()
