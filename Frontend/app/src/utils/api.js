@@ -1,16 +1,22 @@
 import axios from 'axios';
 
-export {getCourseData,postUserData};
+export {getCourseData, getProfileData, postUserData};
 
 function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
   return axios.get(url).then(response => response.data);
 }
-function postUserData(userIdAuth0,name) {
- const url = `https://courserec.herokuapp.com/showStudent`;
+
+function getProfileData() {
+	const url = `https://courseName.herokuapp.com/prereg`;
+	return axios.get(url).then(response => response.data);
+}
+
+function postUserData(userIdAuth0, courseName) {
+ const url = `https://courserec.herokuapp.com/showStudent` + userIdAuth0 + `,` + courseName;
   axios.post(url, {
       userId: userIdAuth0,
-      name: name
+      cname: courseName
 })
 .then(function (response) {
 console.log(response);
