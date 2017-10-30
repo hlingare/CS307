@@ -8,7 +8,7 @@ function getCourseData() {
 }
 
 function getProfileData() {
-<<<<<<< HEAD
+	//TODO: update url
 	const url = `https://courseName.herokuapp.com/prereg`;
 	return axios.get(url).then(response => response.data);
 }
