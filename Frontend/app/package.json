@@ -6,11 +6,20 @@
     "auth0": "^2.8.0",
     "auth0-js": "^8.10.1",
     "axios": "^0.16.2",
+<<<<<<< HEAD
+=======
+    "body-parser": "^1.15.2",
+>>>>>>> c9d69db426ac4532f4d8edbc6797f95a7aad8196
     "jwt-decode": "^2.2.0",
+    "nodemon": "^1.12.1",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
+<<<<<<< HEAD
+    "react-modal": "^3.0.3",
+=======
     "react-modal": "^2.3.3",
+>>>>>>> 7a1d3ccb336b322fc03ebd46134d5d9af4150a20
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13"

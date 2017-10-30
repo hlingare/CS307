@@ -8,12 +8,14 @@ function getCourseData() {
 }
 
 function getProfileData() {
+<<<<<<< HEAD
 	const url = `https://courseName.herokuapp.com/prereg`;
 	return axios.get(url).then(response => response.data);
 }
 
 function postUserData(userIdAuth0, courseName) {
  const url = `https://courserec.herokuapp.com/showStudent` + userIdAuth0 + `,` + courseName;
+
   axios.post(url, {
       userId: userIdAuth0,
       cname: courseName
