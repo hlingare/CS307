@@ -7,6 +7,7 @@ from database_connector import read
 from machine_learning_service import ml_train, ml_predict, normalize
 from sklearn import neighbors
 import psycopg2
+from flask import request
 
 app = Flask(__name__)
 CORS(app)
@@ -76,28 +77,23 @@ def result_list():
 @app.route('/showStudent/<text>')
 def studentinfo(text):
     con = None
+    taken_course = []
+    option = []
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
-        words = text.split(",")
-        usrname = words[0]
-        name = words[1]
-        taken_course = words[2]
-        option = words[3]
-        recommended = words[4]
-        uuid = words[5]
-        courseid = words[6]
-        #print courseid
-        #print usrname
-        #print type(uuid)
-        query = "INSERT INTO student (username, name, taken_course, option, recommended, uuid, courseid) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        cur.execute(query, (usrname, name, taken_course, option, recommended, uuid, courseid))
+        args = text.split(",")
+        uid = args[0]
+        username = args[1]
+        name = args[2]
+        query = "INSERT INTO student (uid, username, name, taken_course, option) VALUES (%s, %s, %s, %s, %s)"
+        cur.execute(query, (uid, username, name, taken_course, option))
         con.commit()
     finally:
         if con:
             con.close()
 
 if __name__ == '__main__':
-          port = 8000 #the custom port you want
+          port = 5000 #the custom port you want
           app.run(debug=True)
           #app.run(host='0.0.0.0', port=port)
