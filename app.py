@@ -104,9 +104,33 @@ def courseInfo(text):
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         words = text.split(",")
+        uuid = words[0]
+        course_name = words[1]
+        temps = (uuid,)
+        cur.execute("SELECT * FROM student WHERE %s = uid",temps)
+        rows = cur.fetchall()
+        temp = []
+        for row in rows:
+             temp.append(list(row))
+        reads = []
+        for i in range(0, len(temp)):
+             temps = []
+             for j in range(0, len(temp[i])):
+                 temps.append(temp[i][j])
+             reads.append(temps)
+        if(len(reads) == 0):
+           return "ERROR"
+        if course_name not in reads[0][2]:
+            reads[0][2].append(course_name)
+        else:
+            return "Course Exists!!"
+        C = reads[0][2]
+        cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uuid), ))
+        con.commit()
+        return reads
     finally:
-       if con:
-           con.close()
+        if con:
+            con.close()
 
 if __name__ == '__main__':
           port = 5000 #the custom port you want
