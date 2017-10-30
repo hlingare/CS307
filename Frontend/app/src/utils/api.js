@@ -7,14 +7,14 @@ function getCourseData() {
   return axios.get(url).then(response => response.data);
 }
 
-function getProfileData() {
+function getProfileData(userIdAuth0) {
 	//TODO: update url
-	const url = `https://courseName.herokuapp.com/prereg`;
+	const url = `https://courserec.herokuapp.com/getUserName/` + userIdAuth0;
 	return axios.get(url).then(response => response.data);
 }
 
 function postUserData(userIdAuth0, courseName) {
- const url = `https://courserec.herokuapp.com/showStudent` + userIdAuth0 + `,` + courseName;
+ const url = `https://courserec.herokuapp.com/showStudent/` + userIdAuth0 + `,` + courseName;
 
   axios.post(url, {
       userId: userIdAuth0,
