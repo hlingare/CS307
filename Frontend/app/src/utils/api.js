@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export {getCourseData, getProfileData, postUserData};
+export {getCourseData, getProfileData, getProfessor, postUserData};
 
 function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
@@ -8,9 +8,13 @@ function getCourseData() {
 }
 
 function getProfileData(userIdAuth0) {
-	//TODO: update url
 	const url = `https://courserec.herokuapp.com/getUserName/` + userIdAuth0;
 	return axios.get(url).then(response => response.data);
+}
+
+function getProfessor(courseName) {
+	//TODO: get proper url
+	const url = `https://courserec.herokuapp.com/`;:
 }
 
 function postUserData(userIdAuth0, courseName) {
