@@ -137,6 +137,22 @@ def courseInfo():
     finally:
         if con:
             con.close()
+@app.route('/updateUsername', methods = ['POST'])
+def updateUsername():
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        text = request.data
+        dart = json.loads(text)
+        uid = dart["userId"]
+        currentUID = (uid,)
+        username = dart["name"]
+        cur.execute("UPDATE student SET username = %s WHERE %s = uid",(username,currentUID, ) )
+        con.commit()
+        response.status_code = 200
+        return response
+
 @app.route('/getCourse', methods = ['GET'])
 def course():
     con = None
