@@ -11,7 +11,6 @@ from sklearn import neighbors
 def normalize(X, Y):
     for i in range (0, len(Y)):
         if (Y[i]) == 11:
-
             for j in range(0, len(X[i])):
                 X[i][j] = X[i][j] - 4
         if (Y[i]) == 12:
