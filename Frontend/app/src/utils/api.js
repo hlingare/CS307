@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export {getCourseData,postUserData,postCourseData};
+export {getCourseData,postUserData,postCourseData,getUserData,getCourseDescription};
 
 function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
@@ -32,4 +32,24 @@ console.log(response);
 .catch(function (error) {
 console.log(error);
 });
+}
+function getUserData() {
+  var uid = window.localStorage.getItem("uid");
+  const url = `https://courserec.herokuapp.com/getUserName`;
+  console.log(uid)
+  return axios.get(url, {
+    params: {
+      uid: uid
+    }
+  }).then(response => response.data);
+}
+
+function getCourseDescription(courseName) {
+  console.log("description")
+  const url = `https://courserec.herokuapp.com/getCourse`;
+  return axios.get(url, {
+    params: {
+      coursename: courseName
+    }
+  }).then(response => response.data);
 }
