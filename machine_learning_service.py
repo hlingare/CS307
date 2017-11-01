@@ -18,7 +18,7 @@ def normalize(X, Y):
                 X[i][j] = X[i][j] - 2
         if (Y[i]) == 13:
             for j in range(0, len(X[i])):
-                X[i][j] = X[i][j] - 0   
+                X[i][j] = X[i][j] - 0
     return X
 
 def ml_train(X, clf):
@@ -31,13 +31,13 @@ def ml_train(X, clf):
     for i in range (0, len(X)):
         if (i < (len(X) / 2)):
             X1.append(X[i])
-        else: 
+        else:
             X2.append(X[i])
     y_0 = run_avg(X1, 0)
     y_1 = run_avg(X2, 1)
     train = X1 + X2
-    y=y_0 + y_1 
-    clf.fit(train, y) 
+    y=y_0 + y_1
+    clf.fit(train, y)
     print("Training Complete")
 
 def ml_predict(X, clf):
