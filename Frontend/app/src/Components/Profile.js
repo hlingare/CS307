@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
-//import AlertContainer from 'react-alert'
+import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
+import { getUserData } from '../utils/api';
 
 
 
@@ -17,7 +18,8 @@ class Profile extends Component {
   constructor () {
     super();
     this.state = {
-      showModal: false
+      showModal: false,
+      username: ""
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -30,6 +32,15 @@ class Profile extends Component {
     var emailBody = 'Hi '+message.from;
     document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
   }
+  getUserData() {
+  getUserData().then((username) => {
+    this.setState({username: username.result.username});
+  });
+}
+
+componentDidMount() {
+  this.getUserData();
+}
 
   handleOpenModal () {
     this.setState({ showModal: true });
@@ -56,16 +67,8 @@ class Profile extends Component {
       return true;
   }
 
-
-
   render() {
-
-
     return (
-
-
-
-
       <div className="home-page">
         <div className="profile__container">
             <br />
@@ -75,7 +78,8 @@ class Profile extends Component {
             <center><h1> @frankMurray </h1></center>
 
             <Button bsStyle="primary" className="signup_button">
-              Frank Muurray
+            {console.log(this.state,"state")}
+            {this.state.username}
             </Button>
 
             <br/>
@@ -92,24 +96,12 @@ class Profile extends Component {
                 Submit
               </Button>
             </form>
-
             <center>
             <a className = "App" href="mailto:someone@yoursite.com?subject=Mail from Our Site">Email Us if you are having trouble with the app.</a>
             </center>
-
-
-
-
         </div>
-
-
-
       </div>
     );
   }
 }
-
-
-
-
 export default Profile;

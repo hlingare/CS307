@@ -4,6 +4,7 @@ import Nav from './Nav';
 import '../styles/courseList.css';
 import { getCourseData } from '../utils/api';
 import history from '../history';
+import Courses from './Courses';
 
 
 class CourseListView extends Component {
@@ -23,8 +24,11 @@ componentDidMount() {
   this.getCourseData();
 }
 
-listcourse() {
-  history.push('/listcourse');
+listcourse(title) {
+ history.push({
+  pathname: '/listcourse',
+  state: { detail: title }
+})
 }
 
   render() {
@@ -39,7 +43,7 @@ listcourse() {
           </div>
           <div className="list">
         { courses.map((course, index) => (
-              <div className="courseName" key={course.id} onClick={this.listcourse}>
+              <div className="courseName" key={course.id} onClick={() => this.listcourse(course.title)}>
               <span>{course.title}</span>
               <span className="recommend">{'RECOMMENDED'}</span>
               </div>
