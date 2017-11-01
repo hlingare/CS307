@@ -52,8 +52,7 @@ class Profile extends Component {
       }
       var uid = window.localStorage.getItem("uid");
       postCourseData(uid,document.getElementById('FileName').value)
-      alert("Course "+document.getElementById('FileName').value+" has been added!");
-
+      alert("Course "+document.getElementById('FileName').value+" has been added!!");
       return true;
   }
 
