@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
+//import AlertContainer from 'react-alert'
+import { postCourseData } from '../utils/api';
 
 
 
@@ -37,43 +39,72 @@ class Profile extends Component {
     this.setState({ showModal: false });
   }
 
+  showAlert() {
+    alert("Course Was Added");
+  }
+
+  checkCourse()
+  {
+      if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
+      {
+          alert("Please Enter a Course Name");
+          return false;
+      }
+      var uid = window.localStorage.getItem("uid");
+      postCourseData(uid,document.getElementById('FileName').value)
+      alert("Course "+document.getElementById('FileName').value+" has been added!!");
+      return true;
+  }
+
+
+
+
+
+
+
+
   render() {
     return (
+
+
+
 
       <div className="home-page">
         <div className="profile__container">
             <br />
             <br />
             <img className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
+
             <center><h1> @frankMurray </h1></center>
-            <Button disabled bsStyle="primary" className="signup_button">
+
+            <Button bsStyle="primary" className="signup_button">
               Frank Muurray
             </Button>
 
-            <br />
+            <br/>
             <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
               Change Password
             </Button>
+            <br/>
 
-            <div>
-            <br />
-              <button bsStyle="primary" className="signup_button" onClick={this.handleOpenModal}>
-              Add Courses
-              </button>
-              <ReactModal isOpen={this.state.showModal} contentLabel="Minimal Modal Example">
-                <form>
-                  <label>
-                    Courses:
-                    <input type="text" name="Courses" />
-                  </label>
-                  <input type="submit" value="Submit" />
-                </form>
-                <button onClick={this.handleCloseModal}>Close Modal</button>
-              </ReactModal>
-            </div>
-            <br />
+            <form name="frm1" id="frm1" className="signup_button">
+              <p>Add Courses you Have Taken</p>
+              <input type="text" name="FileName" id="FileName" />
+              <br/>
+              <Button onClick={this.checkCourse.bind(this)}>
+                Submit
+              </Button>
+            </form>
 
+
+
+
+
+
+            <center>
             <a className = "App" href="mailto:someone@yoursite.com?subject=Mail from Our Site">Email Us if you are having trouble with the app.</a>
+            </center>
+
 
 
 
@@ -85,6 +116,7 @@ class Profile extends Component {
     );
   }
 }
+
 
 
 
