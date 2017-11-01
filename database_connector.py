@@ -16,6 +16,7 @@ def write(X, course_name, option):
     X_t = ()
     for i in range (0, len(X)):
         tuples = ()
+        
         tuples = tuples + (i, )
         tuples = tuples + (course_name[i],)
         for j in range(0 , len(X[i])):
