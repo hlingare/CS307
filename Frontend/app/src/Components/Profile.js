@@ -10,6 +10,16 @@ import { postCourseData } from '../utils/api';
 class Profile extends Component {
 
 
+  handlePrint() {
+    if (this.state.value) {
+      console.log(this.state.value);
+    }
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
+
   login() {
     this.props.auth.login();
   }
@@ -20,8 +30,29 @@ class Profile extends Component {
       showModal: false
     };
 
+    this.state = {value: '12'};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+
+    if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
+    {
+        alert("Please Enter a Course Name");
+        return false;
+    }
+    var uid = window.localStorage.getItem("uid");
+    postCourseData(uid,document.getElementById('FileName').value,this.state.value)
+    alert("Course "+document.getElementById('FileName').value+" has been added!! " + this.state.value);
+    return true;
+    event.preventDefault();
   }
 
   sendEmail(message) {
@@ -51,10 +82,12 @@ class Profile extends Component {
           return false;
       }
       var uid = window.localStorage.getItem("uid");
-      postCourseData(uid,document.getElementById('FileName').value)
+      postCourseData(uid,document.getElementById('FileName').value,11)
       alert("Course "+document.getElementById('FileName').value+" has been added!!");
       return true;
   }
+
+
 
 
 
@@ -91,7 +124,18 @@ class Profile extends Component {
               <p>Add Courses you Have Taken</p>
               <input type="text" name="FileName" id="FileName" />
               <br/>
-              <Button onClick={this.checkCourse.bind(this)}>
+              <br/>
+              <p>Performance Rating</p>
+              <select value={this.state.value} onChange={this.handleChange}>
+                <option value="13">Good</option>
+                <option value="12">Okay</option>
+                <option value="11">Bad</option>
+              </select>
+              <br/>
+
+
+
+              <Button onClick={this.handleSubmit.bind(this)}>
                 Submit
               </Button>
             </form>

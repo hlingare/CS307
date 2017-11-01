@@ -20,11 +20,12 @@ console.log(error);
 });
 }
 
-function postCourseData(userIdAuth0,Coursename) {
+function postCourseData(userIdAuth0,Coursename,Number1) {
  const url = `https://courserec.herokuapp.com/showCourse`;
   axios.post(url, {
       userId: userIdAuth0,
-      course_name: Coursename
+      course_name: Coursename,
+      option: Number1 
 })
 .then(function (response) {
 console.log(response);
