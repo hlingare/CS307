@@ -34,6 +34,7 @@ console.log(response);
 console.log(error);
 });
 }
+
 function getUserData() {
   var uid = window.localStorage.getItem("uid");
   const url = `https://courserec.herokuapp.com/getUserName`;
@@ -43,6 +44,20 @@ function getUserData() {
       uid: uid
     }
   }).then(response => response.data);
+}
+
+function postUserName(userIdAuth0,userName) {
+	const url = `https://courserec.herokuapp.com/updateUsername`;
+		axios.post(url, {
+			userId: userIdAuth0,
+			username: userName
+})
+.then(function (response) {
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+});
 }
 
 function getCourseDescription(courseName) {
