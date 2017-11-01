@@ -131,7 +131,7 @@ def courseInfo():
         D = reads[0][3]
         cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
         cur.execute("UPDATE student SET option = %s WHERE %s = uid",(D,str(uid), ))
-        #print("nothing")
+
         con.commit()
         return reads
     finally:
