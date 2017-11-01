@@ -14,7 +14,7 @@ function getProfileData(userIdAuth0) {
 
 function getProfessor(courseName) {
 	//TODO: get proper url
-	const url = `https://courserec.herokuapp.com/`;:
+	const url = `https://courserec.herokuapp.com/`;
 }
 
 function postUserData(userIdAuth0, courseName) {

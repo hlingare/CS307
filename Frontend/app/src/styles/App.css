@@ -1,5 +1,4 @@
 .App {
-<<<<<<< HEAD
   margin: auto;
 }
 
@@ -119,9 +118,6 @@
 
 .navItem {
   color: red;
-=======
-  text-align: center;
->>>>>>> c9d69db426ac4532f4d8edbc6797f95a7aad8196
 }
 
 .App-logo {
@@ -131,10 +127,6 @@
 
 .App-header {
   background-color: #222;
-<<<<<<< HEAD
-=======
-  height: 150px;
->>>>>>> c9d69db426ac4532f4d8edbc6797f95a7aad8196
   padding: 20px;
   color: white;
 }
@@ -142,11 +134,3 @@
 .App-intro {
   font-size: large;
 }
-<<<<<<< HEAD
-=======
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
->>>>>>> c9d69db426ac4532f4d8edbc6797f95a7aad8196

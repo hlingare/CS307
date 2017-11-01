@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 Flask==0.12.2
 gunicorn==19.7.1
 itsdangerous==0.24
@@ -24,4 +24,3 @@ flask-cors
 sklearn
 numpy
 scipy
->>>>>>> 58d97d4580e09f2299151ca180a829d3202d90b7

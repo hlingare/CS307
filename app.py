@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ./app.py
 from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -268,4 +267,3 @@ if __name__ == '__main__':
           port = 5000 #the custom port you want
           app.run(debug=True)
           #app.run(host='0.0.0.0', port=port)
->>>>>>> 7a1d3ccb336b322fc03ebd46134d5d9af4150a20
