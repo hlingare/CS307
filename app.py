@@ -106,6 +106,7 @@ def courseInfo():
         text = request.data
         dart = json.loads(text)
         uid = dart["userId"]
+        options = dart["option"]
         currentUID = (uid,)
         course_name = dart["course_name"]
         cur.execute("SELECT * FROM student WHERE %s = uid",currentUID)
@@ -123,10 +124,14 @@ def courseInfo():
            return "ERROR"
         if course_name not in reads[0][2]:
             reads[0][2].append(course_name)
+            reads[0][3].append(options)
         else:
             return "Course Exists!!"
         C = reads[0][2]
+        D = reads[0][3]
         cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
+        cur.execute("UPDATE student SET option = %s WHERE %s = uid",(D,str(uid), ))
+
         con.commit()
         return reads
     finally:
