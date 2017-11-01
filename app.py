@@ -142,9 +142,9 @@ def course():
         #courseId = words[0]
         text = request.data
         dart = json.loads(text)
-        courseId = dart["courseId"]
-        currentCourseId = (courseId,)
-        cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = idcourse", currentCourseId)
+        courseName = dart["name"]
+        currentCourseName = (courseName,)
+        cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = name", currentCourseName)
         result = []
         res = cur.fetchall()
         result.append(res)
