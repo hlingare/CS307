@@ -58,12 +58,9 @@ class Profile extends Component {
 
 
 
-
-
-
-
-
   render() {
+
+
     return (
 
 
@@ -95,11 +92,6 @@ class Profile extends Component {
                 Submit
               </Button>
             </form>
-
-
-
-
-
 
             <center>
             <a className = "App" href="mailto:someone@yoursite.com?subject=Mail from Our Site">Email Us if you are having trouble with the app.</a>
