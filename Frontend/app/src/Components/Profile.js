@@ -3,6 +3,7 @@ import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } fr
 import '../styles/App.css';
 import ReactModal from 'react-modal';
 import AlertContainer from 'react-alert'
+import { postCourseData } from '../utils/api';
 
 
 
@@ -49,6 +50,8 @@ class Profile extends Component {
           alert("Please Enter a Course Name");
           return false;
       }
+      var uid = window.localStorage.getItem("uid");
+      postCourseData(uid,document.getElementById('FileName').value)
       alert("Course "+document.getElementById('FileName').value+" has been added!");
 
       return true;
