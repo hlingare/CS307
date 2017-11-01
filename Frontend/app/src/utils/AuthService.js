@@ -53,9 +53,8 @@ export default class AuthService {
 
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if(profile) {
-          console.log(profile);
-          localStorage.setItem('user', profile);
           var userid = profile.sub.split('|');
+          localStorage.setItem('uid', userid[1]);
           var name = profile.nickname;
           postUserData(userid[1],name);
       }
