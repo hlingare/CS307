@@ -138,47 +138,44 @@ def course():
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
-        #words = text.split(",")
-        #courseId = words[0]
-        text = request.data
-        dart = json.loads(text)
-        courseName = dart["name"]
+        courseName =  request.args.get('coursename')
         currentCourseName = (courseName,)
         cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = name", currentCourseName)
         result = []
-        res = cur.fetchall()
-        result.append(res)
-
-        #results.append(list(res))
-
-        response = jsonify(result)
-        response.status_code = 200
-        return response
+        for row in cur:
+             print(row,"row")
+             obj = {
+               'name': row[1],
+               'description': row[2],
+               'professor': row[3],
+               'timings': row[4],
+             }
+             result.append(obj)
+             response = jsonify(result = obj)
+             response.status_code = 200
+             return response
     finally:
         if con:
             con.close()
 @app.route('/getUserName', methods = ['GET'])
-def getusername():
+def getUserName():
     con = None
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
-        #words = text.split(",")
-        #uid = words[0]
-        text = request.data
-        dart = json.loads(text)
-        uid = dart["uid"]
+        uid = request.args.get('uid')
         currentUID = (uid,)
         cur.execute("SELECT username FROM student WHERE %s = uid", currentUID)
         result = []
-        res = cur.fetchall()
-        result.append(res)
-
-        #results.append(list(res))
-
-        response = jsonify(result)
-        response.status_code = 200
-        return response
+        for row in cur:
+             print(row,"row")
+             obj = {
+               'username': row[0],
+             }
+             result.append(obj)
+             response = jsonify(result = obj)
+             response.status_code = 200
+             return response
     finally:
         if con:
             con.close()
