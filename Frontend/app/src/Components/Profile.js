@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
-import AlertContainer from 'react-alert'
+//import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
 import { getUserData } from '../utils/api';
 
