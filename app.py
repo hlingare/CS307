@@ -11,7 +11,6 @@ from flask import request
 import json
 from json import JSONEncoder
 from json import JSONDecoder
-from flask_s3 import FlaskS3
 
 app = Flask(__name__)
 CORS(app)
