@@ -47,7 +47,7 @@ def result_list(text):
         #words = text.split(",")
         #text = request.data
         print("TExt:",text)
-        dart = json.loads(text)
+        #dart = json.loads(text)
         #uid = dart["userId"]
         uid = text
         print(uid)
