@@ -4,12 +4,23 @@ import '../styles/App.css';
 import ReactModal from 'react-modal';
 //import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
+import { postUserName } from '../utils/api';
 import { getUserData } from '../utils/api';
 
 
 
 class Profile extends Component {
 
+
+  handlePrint() {
+    if (this.state.value) {
+      console.log(this.state.value);
+    }
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
 
   login() {
     this.props.auth.login();
@@ -22,8 +33,39 @@ class Profile extends Component {
       username: ""
     };
 
+    this.state = {value: '12'};
+    this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+  componentWillUnmount(){
+    //make api post
+    var uid = window.localStorage.getItem("uid");
+    postUserName(uid,this.state.username)
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleUserChange(event) {
+    this.setState({username: event.target.value});
+  }
+
+  handleSubmit(event) {
+
+    if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
+    {
+        alert("Please Enter a Course Name");
+        return false;
+    }
+    var uid = window.localStorage.getItem("uid");
+    postCourseData(uid,document.getElementById('FileName').value,this.state.value)
+    alert("Course "+document.getElementById('FileName').value+" has been added!! " + this.state.value);
+    return true;
+    event.preventDefault();
   }
 
   sendEmail(message) {
@@ -54,18 +96,6 @@ componentDidMount() {
     alert("Course Was Added");
   }
 
-  checkCourse()
-  {
-      if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
-      {
-          alert("Please Enter a Course Name");
-          return false;
-      }
-      var uid = window.localStorage.getItem("uid");
-      postCourseData(uid,document.getElementById('FileName').value)
-      alert("Course "+document.getElementById('FileName').value+" has been added!!");
-      return true;
-  }
 
   render() {
     return (
@@ -74,11 +104,18 @@ componentDidMount() {
             <br />
             <br />
             <img className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
-
-            <center><h1> @frankMurray </h1></center>
+            <br />
+            <center>
+            <input
+            type="text"
+            className="signup_button"
+            value ={this.state.username}
+            onChange = {this.handleUserChange}
+            />
+            </center>
+            <br />
 
             <Button bsStyle="primary" className="signup_button">
-            {console.log(this.state,"state")}
             {this.state.username}
             </Button>
 
@@ -87,12 +124,22 @@ componentDidMount() {
               Change Password
             </Button>
             <br/>
-
             <form name="frm1" id="frm1" className="signup_button">
               <p>Add Courses you Have Taken</p>
               <input type="text" name="FileName" id="FileName" />
               <br/>
-              <Button onClick={this.checkCourse.bind(this)}>
+              <br/>
+              <p>Performance Rating</p>
+              <select value={this.state.value} onChange={this.handleChange}>
+                <option value="13">Good</option>
+                <option value="12">Okay</option>
+                <option value="11">Bad</option>
+              </select>
+              <br/>
+
+
+
+              <Button onClick={this.handleSubmit.bind(this)}>
                 Submit
               </Button>
             </form>
