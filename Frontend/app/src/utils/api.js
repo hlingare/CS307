@@ -3,6 +3,7 @@ import axios from 'axios';
 export {
   getCourseData,
   postUserData,
+  postUserName,
   postCourseData,
   getUserData,
   getCourseDescription,

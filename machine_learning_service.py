@@ -7,6 +7,7 @@ Created on Fri Sep 29 11:23:47 2017
 import numpy as np
 from random import randint
 from sklearn import neighbors
+from operator import itemgetter
 
 def normalize(X, Y):
     for i in range (0, len(Y)):
@@ -24,6 +25,7 @@ def normalize(X, Y):
 def ml_train(X, clf):
     #X = normalize(X, option)
     #Training Session
+    print("clf: ", clf)
     y= []
     train = []
     X1 = []
@@ -40,10 +42,14 @@ def ml_train(X, clf):
     clf.fit(train, y)
     print("Training Complete")
 
-def ml_predict(X, clf):
-#    print(clf)
-    prediction = clf.predict(X)
-    return prediction
+def ml_distances(X,clf):
+    print("prediction: ", X)
+    distances, indexes = clf.kneighbors(X)
+    for i in range(0,len(X)):
+        X[i].append(distances[i][0])
+    distances = sorted(X,key=itemgetter(5))
+    print("distances: ", distances)
+    return distances
 
 def run_avg(X, a):
     y = []

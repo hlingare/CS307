@@ -17,14 +17,12 @@ class Course extends Component {
   }
 
   handleUpvoteClicked() {
-  console.log(this.state.votes);
   if (!this.state.disabledUpvote) {
     this.setState({
       disabledUpvote: true,
       disabledDownvote: false,
-      votes: 1 + this.state.votes
+      votes: this.state.votes + 1
     });
-    console.log(this.state.votes);
   }
   }
   handleDownvoteClicked() {
@@ -32,7 +30,7 @@ class Course extends Component {
     this.setState({
       disabledUpvote: false,
       disabledDownvote: true,
-      votes: 1 - this.state.votes
+      votes: this.state.votes - 1
     });
   }
   }
@@ -49,7 +47,7 @@ class Course extends Component {
       this.setState({ votes: courses.result.upvote });
     });
   }
-  componentWillUnmount() {
+  componentDidUpdate() {
     postVote(this.props.title,this.state.votes);
   }
 
