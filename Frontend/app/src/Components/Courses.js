@@ -23,7 +23,6 @@ class Courses extends Component {
   }
   getCourseDescription() {
     getCourseDescription(this.props.location.state.detail).then((courseDescription) => {
-      console.log(courseDescription);
       this.setState({
         courseDescription: courseDescription.result.description,
         name: courseDescription.result.name,

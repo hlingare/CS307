@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-export {getCourseData,postUserData,postCourseData,getUserData,getCourseDescription};
+export {
+  getCourseData,
+  postUserData,
+  postUserName,
+  postCourseData,
+  getUserData,
+  getCourseDescription,
+  postVote,
+  getVote
+};
 
 function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
@@ -20,11 +29,12 @@ console.log(error);
 });
 }
 
-function postCourseData(userIdAuth0,Coursename) {
+function postCourseData(userIdAuth0,Coursename,Number1) {
  const url = `https://courserec.herokuapp.com/showCourse`;
   axios.post(url, {
       userId: userIdAuth0,
-      course_name: Coursename
+      course_name: Coursename,
+      option: Number1
 })
 .then(function (response) {
 console.log(response);
@@ -33,6 +43,7 @@ console.log(response);
 console.log(error);
 });
 }
+
 function getUserData() {
   var uid = window.localStorage.getItem("uid");
   const url = `https://courserec.herokuapp.com/getUserName`;
@@ -44,12 +55,48 @@ function getUserData() {
   }).then(response => response.data);
 }
 
+function postUserName(userIdAuth0,userName) {
+	const url = `https://courserec.herokuapp.com/updateUsername`;
+		axios.post(url, {
+			userId: userIdAuth0,
+			username: userName
+})
+.then(function (response) {
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+});
+}
+
 function getCourseDescription(courseName) {
-  console.log("description")
   const url = `https://courserec.herokuapp.com/getCourse`;
   return axios.get(url, {
     params: {
       coursename: courseName
+    }
+  }).then(response => response.data);
+}
+
+function postVote(title,votes) {
+	const url = `https://courserec.herokuapp.com/postVote`;
+		axios.post(url, {
+			courseName: title,
+			upvote: votes
+})
+.then(function (response) {
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+});
+}
+
+function getVote(courseName) {
+  const url = `https://courserec.herokuapp.com/getVote`;
+  return axios.get(url, {
+    params: {
+      courseName: courseName
     }
   }).then(response => response.data);
 }
