@@ -6,6 +6,7 @@ function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
   return axios.get(url).then(response => response.data);
 }
+
 function postUserData(userIdAuth0,name) {
  const url = `https://courserec.herokuapp.com/showStudent`;
   axios.post(url, {
@@ -20,11 +21,12 @@ console.log(error);
 });
 }
 
-function postCourseData(userIdAuth0,Coursename) {
+function postCourseData(userIdAuth0,Coursename,performance) {
  const url = `https://courserec.herokuapp.com/showCourse`;
   axios.post(url, {
       userId: userIdAuth0,
-      course_name: Coursename
+      course_name: Coursename,
+      option: performance
 })
 .then(function (response) {
 console.log(response);
