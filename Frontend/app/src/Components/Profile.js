@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
-import AlertContainer from 'react-alert'
+//import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
+import { postUserName } from '../utils/api';
 import { getUserData } from '../utils/api';
 
 
@@ -39,9 +40,10 @@ class Profile extends Component {
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
-  componentDidUnmount(){
+  componentWillUnmount(){
     //make api post
-
+    var uid = window.localStorage.getItem("uid");
+    postUserName(uid,this.state.username)
   }
 
   handleChange(event) {
