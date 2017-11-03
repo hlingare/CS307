@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
-//import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
 import { postUserName } from '../utils/api';
 import { getUserData } from '../utils/api';
-
+import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 
 
 class Profile extends Component {
@@ -16,6 +15,11 @@ class Profile extends Component {
     if (this.state.value) {
       console.log(this.state.value);
     }
+  }
+  handleFinishedUpload = info => {
+    console.log("hazard");
+     console.log('File uploaded with filename', info.filename)
+     console.log('Access it on s3 at', info.fileUrl)
   }
 
   handleChange(e) {
@@ -45,6 +49,9 @@ class Profile extends Component {
     var uid = window.localStorage.getItem("uid");
     postUserName(uid,this.state.username)
   }
+
+
+
 
   handleChange(event) {
     this.setState({value: event.target.value});
@@ -98,12 +105,17 @@ componentDidMount() {
 
 
   render() {
+    const uploadOptions = {
+      server: 'http://localhost:4000',
+      signingUrlQueryParams: {uploadType: 'avatar'},
+}
+  const s3Url = 'https://my-bucket.s3.amazonaws.com'
     return (
       <div className="home-page">
         <div className="profile__container">
             <br />
             <br />
-            <img className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
+            <img  className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
             <br />
             <center>
             <input
@@ -123,6 +135,12 @@ componentDidMount() {
             <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
               Change Password
             </Button>
+              <DropzoneS3Uploader
+                onFinish={this.handleFinishedUpload}
+                s3Url={s3Url}
+                maxSize={1024 * 1024 * 5}
+                upload={uploadOptions}
+       />
             <br/>
             <form name="frm1" id="frm1" className="signup_button">
               <p>Add Courses you Have Taken</p>

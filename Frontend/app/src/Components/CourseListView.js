@@ -43,7 +43,8 @@ componentDidMount() {
               <div className="courseName" key={course.id}>
               <span>
                 <Course
-                  title={course.title}
+                  title={course.name}
+                  score={course.score}
                 >
                 </Course>
               </span>
