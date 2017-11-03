@@ -4,6 +4,8 @@ import { getCourseDescription } from '../utils/api';
 
 import history from '../history';
 import '../styles/nav.css';
+import '../styles/CourseSpec.css';
+
 
 class Courses extends Component {
 
@@ -35,12 +37,36 @@ class Courses extends Component {
 
   render() {
     return (
-      <div>
-      <span>{this.state.courseDescription}</span>
-      <span>{this.state.name}</span>
-      <span>{this.state.professor}</span>
-      <span>{this.state.timings}</span>
+      <div className="coursePeck">
+
+      <div className="container">
+        <h3 className="text-center">{this.state.name}</h3>
       </div>
+
+      <div>
+        <br />
+        <center><label>Course Description: </label></center>
+        <label  >{this.state.courseDescription}</label>
+        <br />
+        <label>{this.state.professor}</label>
+        <br />
+        <label>{this.state.timings}</label>
+        <br />
+        <label>{this.state.name}</label>
+        <br />
+      </div>
+
+
+
+
+
+
+
+      </div>
+
+
+
+
 
     );
   }
