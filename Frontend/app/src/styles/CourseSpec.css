@@ -1,4 +1,15 @@
 .label1 {
-    display: block;
     padding-right: 30px;
+    padding-left: 30px;
+    display: flex;
+}
+.label2 {
+    padding-right: 30px;
+    padding-left: 30px;
+    background-color: lightskyblue;
+    display: flex;
+}
+
+.form1 {
+    background-color: ghostwhite;
 }

@@ -37,23 +37,22 @@ class Courses extends Component {
 
   render() {
     return (
-      <div className="coursePeck">
+      <div className="form1">
 
       <div className="container">
-        <h3 className="text-center">{this.state.name}</h3>
+        <h3 className="text-center">{this.state.name.toUpperCase()}</h3>
       </div>
 
       <div>
-        <br />
-        <center><label>Course Description: </label></center>
-        <label  >{this.state.courseDescription}</label>
-        <br />
-        <label>{this.state.professor}</label>
-        <br />
-        <label>{this.state.timings}</label>
-        <br />
-        <label>{this.state.name}</label>
-        <br />
+        <br/>
+        <h4><label className="label2" >Course Description: </label></h4>
+        <label className="label1" >{this.state.courseDescription}</label>
+        <br/>
+        <h4><label className="label2" >Professor: </label></h4>
+        <label className="label1">{this.state.professor}</label>
+        <br/>
+        <h4><label className="label2" >Course Timings: </label></h4>
+        <label className="label1">{this.state.timings}</label>
       </div>
 
 
