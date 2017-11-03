@@ -4,15 +4,19 @@ import Nav from './Nav';
 import '../styles/courseList.css';
 import { getCourseData } from '../utils/api';
 import history from '../history';
-import Courses from './Courses';
+import Course from './Course';
+import { Button } from 'react-bootstrap';
 
 
 class CourseListView extends Component {
 
   constructor() {
     super()
-    this.state = { courses: [] };
+    this.state = {
+      courses: [],
+    };
   }
+
 
   getCourseData() {
   getCourseData().then((courses) => {
@@ -22,13 +26,6 @@ class CourseListView extends Component {
 
 componentDidMount() {
   this.getCourseData();
-}
-
-listcourse(title) {
- history.push({
-  pathname: '/listcourse',
-  state: { detail: title }
-})
 }
 
   render() {
@@ -43,10 +40,14 @@ listcourse(title) {
           </div>
           <div className="list">
         { courses.map((course, index) => (
-              <div className="courseName" key={course.id} onClick={() => this.listcourse(course.title)}>
-              <span>{course.title}</span>
-              <span className="recommend">{'RECOMMENDED'}</span>
-              </div>
+              <div className="courseName" key={course.id}>
+              <span>
+                <Course
+                  title={course.title}
+                >
+                </Course>
+              </span>
+            </div>
           ))}
           </div>
           </div>
