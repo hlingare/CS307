@@ -13,8 +13,12 @@ export {
 };
 
 function getCourseData() {
-  const url = `https://courserec.herokuapp.com/prereg`;
-  return axios.get(url).then(response => response.data);
+  var uid = window.localStorage.getItem("uid");
+  const url = `https://courserec.herokuapp.com/get_result_list`;
+  return axios.get(url,{
+    params: {
+      userId: uid
+    }}).then(response => response.data);
 }
 function postUserData(userIdAuth0,name) {
   console.log(userIdAuth0);

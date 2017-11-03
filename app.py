@@ -39,16 +39,17 @@ def prereg():
       return response
 
 @app.route('/result_list', methods=['POST'])
-def result_list():
+def result_list(text):
     con = None
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         #words = text.split(",")
-        text = request.data
+        #text = request.data
         print("TExt:",text)
-        dart = json.loads(text)
-        uid = dart["userId"]
+        #dart = json.loads(text)
+        #uid = dart["userId"]
+        uid = text
         print(uid)
         #uid = words[0]
         currentUid = (uid,)
@@ -67,14 +68,18 @@ def result_list():
     finally:
         if con:
             con.close()
+
 @app.route('/get_result_list',methods=['GET'])
 def get_result_list():
     con = None
     try:
+
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         text = request.args.get('userId')
+        result_list(text)
         print("Text:",text)
+
         #dart = json.loads(text)
         #uid = dart["userId"]
         currentUid = (text,)
