@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-export {getCourseData,postUserData,postCourseData,getUserData,getCourseDescription};
+export {
+  getCourseData,
+  postUserData,
+  postCourseData,
+  getUserData,
+  getCourseDescription,
+  postVote,
+  getVote
+};
 
 function getCourseData() {
   const url = `https://courserec.herokuapp.com/prereg`;
@@ -61,11 +69,33 @@ console.log(error);
 }
 
 function getCourseDescription(courseName) {
-  console.log("description")
   const url = `https://courserec.herokuapp.com/getCourse`;
   return axios.get(url, {
     params: {
       coursename: courseName
+    }
+  }).then(response => response.data);
+}
+
+function postVote(title,votes) {
+	const url = `https://courserec.herokuapp.com/postVote`;
+		axios.post(url, {
+			courseName: title,
+			upvote: votes
+})
+.then(function (response) {
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+});
+}
+
+function getVote(courseName) {
+  const url = `https://courserec.herokuapp.com/getVote`;
+  return axios.get(url, {
+    params: {
+      courseName: courseName
     }
   }).then(response => response.data);
 }
