@@ -21,3 +21,4 @@ flask-cors
 sklearn
 numpy
 scipy
+operator
