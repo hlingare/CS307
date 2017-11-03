@@ -55,7 +55,7 @@ class Course extends Component {
     return(
       <div>
       <span onClick={() => this.listcourse(this.props.title)}>{this.props.title}</span>
-      <span className="recommend">{'RECOMMENDED'}</span>
+      <span className="recommend">{this.props.score}</span>
         <Button
           label="Upvote"
           disabled={this.state.disabledUpvote}
@@ -68,7 +68,6 @@ class Course extends Component {
         </Button>
         <span>{this.state.votes}</span>
         </div>
-
     )
   }
 }
