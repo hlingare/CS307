@@ -17,6 +17,7 @@ class Courses extends Component {
       timings:'',
       professor: '',
     };
+
   }
 
   componentDidMount() {
@@ -35,12 +36,20 @@ class Courses extends Component {
 
   }
 
+  myFunction1() {
+    //console.log("why am im going in here at start");
+    var email = this.state.name.toUpperCase()
+    var courseinfo = this.state.courseDescription;
+        window.location.href = "mailto:" + "" + "?subject=" + "Course Information of "+email+"&body="+"CourseInfo: "+courseinfo+"%0A"+"%0A"+"Course Timing: "+this.state.timings+"%0A"+"%0A"+"Professor Name: "+this.state.professor;
+  }
+
   render() {
     return (
       <div className="form1">
 
       <div className="container">
         <h3 className="text-center">{this.state.name.toUpperCase()}</h3>
+        <button onClick={this.myFunction1.bind(this,"")}>Click me</button>
       </div>
 
       <div>
