@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { getCourseDescription } from '../utils/api';
+import ReactDisqusComments from 'react-disqus-comments';
+
 
 import history from '../history';
 import '../styles/nav.css';
@@ -21,6 +23,10 @@ class Courses extends Component {
     this.getCourseDescription();
 
   }
+
+  handleNewComment(comment){
+		console.log(comment.text);
+	}
   getCourseDescription() {
     getCourseDescription(this.props.location.state.detail).then((courseDescription) => {
       this.setState({
@@ -40,6 +46,14 @@ class Courses extends Component {
       <span>{this.state.name}</span>
       <span>{this.state.professor}</span>
       <span>{this.state.timings}</span>
+      <ReactDisqusComments
+  				shortname="courserec"
+  				identifier={this.state.name}
+  				title={this.state.name}
+          category_id="123456"
+  				onNewComment={this.handleNewComment}
+     />
+
       </div>
 
     );
