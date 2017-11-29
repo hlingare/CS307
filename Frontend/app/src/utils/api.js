@@ -8,7 +8,6 @@ export {
   getUserData,
   getCourseDescription,
   postVote,
-  postUserName,
   getVote
 };
 
@@ -21,7 +20,6 @@ function getCourseData() {
     }}).then(response => response.data);
 }
 function postUserData(userIdAuth0,name) {
-  console.log(userIdAuth0);
  const url = `https://courserec.herokuapp.com/showStudent`;
   axios.post(url, {
       userId: userIdAuth0,
@@ -62,8 +60,6 @@ function getUserData() {
 }
 
 function postUserName(userIdAuth0,userName) {
-  console.log("Post ")
-  console.log(userName)
 	const url = `https://courserec.herokuapp.com/updateUsername`;
 		axios.post(url, {
 			userId: userIdAuth0,

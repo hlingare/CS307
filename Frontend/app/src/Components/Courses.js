@@ -53,6 +53,8 @@ class Courses extends Component {
         <br/>
         <h4><label className="label2" >Course Timings: </label></h4>
         <label className="label1">{this.state.timings}</label>
+        <h4><label className="label2" >Average Grade: </label></h4>
+        <label className="label1">A</label>
       </div>
 
 
