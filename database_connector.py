@@ -7,7 +7,8 @@ Created on Wed Oct  4 04:12:14 2017
 import psycopg2
 from random import randint
 from sklearn import neighbors
-from machine_learning_service import normalize, ml_train, ml_predict
+from machine_learning_service import normalize, ml_train,  ml_distances
+from operator import itemgetter
 
 n_neighbors = 4
 clf = neighbors.KNeighborsClassifier(n_neighbors, weights='uniform')
@@ -37,17 +38,6 @@ def write(X, course_name, option):
             query = ("INSERT INTO courseList(Id, C_Name, Math, CritT, TW, SD, MEM) VALUES (%s, %s, %s, %s, %s, %s, %s)")
             cur.executemany(query, X_t)
             con.commit()
-    finally:
-        if con:
-            con.close()
-
-def name_table():
-    con = None
-    try:
-        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
-        cur = con.cursor()
-        cur.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
-        print (cur.fetchall())
     finally:
         if con:
             con.close()
@@ -117,66 +107,122 @@ def training(train_data, clf):
     ml_train(train_data, clf)
 
 def predicts(predict_data, clf):
-    ml_predict(predict_data, clf)
+    distances = ml_distances(predict_data, clf)
+    return distances
 
-def testing():
-    train_data = []
-    user_number = 9
-    for i in range (0, user_number):
-        lists = []
-        for j in range (0, 5):
-            if (i < 4):
-                lists.append(randint(0, 5))
-            if (i >=4 and i < 9):
-                lists.append(randint(6, 10))
-        train_data.append(lists)
+def training_data(course_list):
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        fin_traits = []
+        for i in range(0, len(course_list)):
+            traits = []
+            course_name = course_list[i].lower()
+            temps = (course_name,)
+            cur.execute("SELECT trait FROM course WHERE %s = name", temps)
+            rows = cur.fetchall()
+            temp = []
+            for row in rows:
+                temp.append(list(row))
+            traits = []
+            for j in range(0,len(temp[0][0])):
+                traits.append(int(temp[0][0][j]))
+            fin_traits.append(traits)
+            con.commit()
+            return fin_traits
+    finally:
+         if con:
+             con.close()
 
-    for i in range(0, len(train_data)):
-        if (i < 3):
-            train_data[i].append(13)
-        if (i >= 3 and i < 7):
-            train_data[i].append(12)
-        if (i >= 7 and i < 9):
-            train_data[i].append(11)
+def course_list(id_stud):
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        temps = (id_stud, )
+        cur.execute("SELECT taken_course FROM student WHERE %s = uid", temps)
+        rows = cur.fetchall()
+        temp = []
+        for row in rows:
+            temp.append(list(row))
+        courses = []
+        for i in range(0,len(temp[0][0])):
+            courses.append(temp[0][0][i])
+        option = []
+        cur.execute("SELECT option FROM student WHERE %s = uid", temps)
+        rows = cur.fetchall()
+        temp = []
+        for row in rows:
+            temp.append(list(row))
+        for i in range(0,len(temp[0][0])):
+            option.append(temp[0][0][i])
+        con.commit()
+        return courses,option
+    finally:
+         if con:
+             con.close()
 
-    course_name = []
-    for i in range (0, user_number):
-        string = "cs25"
-        string = string + str(i)
-        course_name.append(string)
+def predict_data():
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        cur.execute("SELECT trait FROM course")
+        colnames = [desc[0] for desc in cur.description]
+        rows = cur.fetchall()
+        temp = []
+        for row in rows:
+            temp.append(list(row))
+        trait = []
+        temp1 = []
+        for i in range(0,len(temp)):
+            for j in range(0,len(temp[0])):
+                temp1.append(temp[i][j])
+        temp4 = []
+        for i in range(0,len(temp1)):
+            temp3 = []
+            for j in range(0, len(temp1[0])):
+                temp3.append(int(temp1[i][j]))
+            temp4.append(temp3)
+        trait = temp4
+        return (trait)
+    finally:
+         if con:
+             con.close()
 
-    #User Data
-    name_table()
-    write(train_data, course_name, 0)
-    norm_data = read(train_data, 0)
-    #print(norm_data)
-    ml_train(norm_data, clf)
-
-    #Prediction
-    pred_data = []
-    for i in range (0, 20):
-        lists = []
-        for j in range (0, 5):
-            lists.append(randint(0, 10))
-        pred_data.append(lists)
-
-
-
-    course_name = []
-    for i in range (0, 20):
-        string = "Me25"
-        string = string + str(i)
-        course_name.append(string)
-
-    #Total Course List
-    write(pred_data, course_name, 1)
-    predict_data = read(1)
-    #print(predict_data)
-    prediction = ml_predict(predict_data, clf)
-    for i in range(0, len(prediction)):
-        if (prediction[i] == 0):
-            print("Yes: ", predict_data[i])
-        else:
-            print("No: ", predict_data[i])
-
-#testing()
+def create_uid(uid, course_list):
+    try:
+        conn = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = conn.cursor()
+        names = []
+        scores = []
+        for i in range(0, len(course_list)):
+            traits_list = []
+            for j in range(0, len(course_list[i])):
+                if (j < len(course_list[i]) - 1):
+                    traits_list.append(course_list[i][j])
+                else:
+                    scores.append(course_list[i][j])
+            cur2 = conn.cursor()
+            cur2.execute("SELECT * FROM course WHERE trait = %s", (traits_list, ))
+            rows = cur2.fetchall()
+            names.append(rows[0][1])
+            conn.commit()
+            cur2.close()
+        temps = (uid, )
+        query = 'DROP TABLE IF EXISTS "{}"'.format(str(uid))
+        cur.execute(query)
+        conn.commit()
+        query = 'create table "{}"(ID INT NOT NULL PRIMARY KEY, name TEXT, score INT)'.format(str(uid))
+        cur.execute(query)
+        conn.commit()
+        for i in range(0, len(names)):
+            print(names[i])
+            querry = ('INSERT INTO "{}"(ID, name, score) VALUES (%s, %s, %s)'.format(str(uid)))
+            cur.execute(querry, (i, names[i], scores[i]))
+        conn.commit()
+        cur.close()
+    finally:
+         if (conn is not None):
+            conn.close()

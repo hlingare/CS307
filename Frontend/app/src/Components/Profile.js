@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'react-bootstrap';
 import '../styles/App.css';
 import ReactModal from 'react-modal';
-//import AlertContainer from 'react-alert'
 import { postCourseData } from '../utils/api';
+import { postUserName } from '../utils/api';
 import { getUserData } from '../utils/api';
-
+import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
 
 
 class Profile extends Component {
@@ -15,6 +15,11 @@ class Profile extends Component {
     if (this.state.value) {
       console.log(this.state.value);
     }
+  }
+  handleFinishedUpload = info => {
+    console.log("hazard");
+     console.log('File uploaded with filename', info.filename)
+     console.log('Access it on s3 at', info.fileUrl)
   }
 
   handleChange(e) {
@@ -33,14 +38,27 @@ class Profile extends Component {
     };
 
     this.state = {value: '12'};
+    this.handleUserChange = this.handleUserChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
+  componentWillUnmount(){
+    //make api post
+    var uid = window.localStorage.getItem("uid");
+    postUserName(uid,this.state.username)
+  }
+
+
+
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  handleUserChange(event) {
+    this.setState({username: event.target.value});
   }
 
   handleSubmit(event) {
@@ -85,6 +103,7 @@ componentDidMount() {
     alert("Course Was Added");
   }
 
+<<<<<<< HEAD
   checkCourse()
   {
       if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
@@ -97,19 +116,33 @@ componentDidMount() {
       alert("Course "+document.getElementById('FileName').value+" has been added!!");
       return true;
   }
+=======
+>>>>>>> 284615dc2bbab1a381fdf5221a6f48ae381bd25d
 
   render() {
+    const uploadOptions = {
+      server: 'http://localhost:4000',
+      signingUrlQueryParams: {uploadType: 'avatar'},
+}
+  const s3Url = 'https://my-bucket.s3.amazonaws.com'
     return (
       <div className="home-page">
         <div className="profile__container">
             <br />
             <br />
-            <img className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
-
-            <center><h1> @frankMurray </h1></center>
+            <img  className="circular_image" src="https://static-cdn.jtvnw.net/jtv_user_pictures/barneezyjones-profile_image-fac2b2f47d17661b-300x300.png" />
+            <br />
+            <center>
+            <input
+            type="text"
+            className="signup_button"
+            value ={this.state.username}
+            onChange = {this.handleUserChange}
+            />
+            </center>
+            <br />
 
             <Button bsStyle="primary" className="signup_button">
-            {console.log(this.state,"state")}
             {this.state.username}
             </Button>
 
@@ -117,8 +150,13 @@ componentDidMount() {
             <Button bsStyle="primary" className="signup_button" onClick={this.login.bind(this)}>
               Change Password
             </Button>
+              <DropzoneS3Uploader
+                onFinish={this.handleFinishedUpload}
+                s3Url={s3Url}
+                maxSize={1024 * 1024 * 5}
+                upload={uploadOptions}
+       />
             <br/>
-
             <form name="frm1" id="frm1" className="signup_button">
               <p>Add Courses you Have Taken</p>
               <input type="text" name="FileName" id="FileName" />

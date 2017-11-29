@@ -1,10 +1,23 @@
 import axios from 'axios';
 
-export {getCourseData,postUserData,postCourseData,getUserData,getCourseDescription};
+export {
+  getCourseData,
+  postUserData,
+  postUserName,
+  postCourseData,
+  getUserData,
+  getCourseDescription,
+  postVote,
+  getVote
+};
 
 function getCourseData() {
-  const url = `https://courserec.herokuapp.com/prereg`;
-  return axios.get(url).then(response => response.data);
+  var uid = window.localStorage.getItem("uid");
+  const url = `https://courserec.herokuapp.com/get_result_list`;
+  return axios.get(url,{
+    params: {
+      userId: uid
+    }}).then(response => response.data);
 }
 
 function postUserData(userIdAuth0,name) {
@@ -26,7 +39,11 @@ function postCourseData(userIdAuth0,Coursename,performance) {
   axios.post(url, {
       userId: userIdAuth0,
       course_name: Coursename,
+<<<<<<< HEAD
       option: performance
+=======
+      option: Number1
+>>>>>>> 284615dc2bbab1a381fdf5221a6f48ae381bd25d
 })
 .then(function (response) {
 console.log(response);
@@ -51,7 +68,7 @@ function postUserName(userIdAuth0,userName) {
 	const url = `https://courserec.herokuapp.com/updateUsername`;
 		axios.post(url, {
 			userId: userIdAuth0,
-			username: userName
+			name: userName
 })
 .then(function (response) {
 console.log(response);
@@ -62,11 +79,33 @@ console.log(error);
 }
 
 function getCourseDescription(courseName) {
-  console.log("description")
   const url = `https://courserec.herokuapp.com/getCourse`;
   return axios.get(url, {
     params: {
       coursename: courseName
+    }
+  }).then(response => response.data);
+}
+
+function postVote(title,votes) {
+	const url = `https://courserec.herokuapp.com/postVote`;
+		axios.post(url, {
+			courseName: title,
+			upvote: votes
+})
+.then(function (response) {
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+});
+}
+
+function getVote(courseName) {
+  const url = `https://courserec.herokuapp.com/getVote`;
+  return axios.get(url, {
+    params: {
+      courseName: courseName
     }
   }).then(response => response.data);
 }
