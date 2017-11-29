@@ -18,6 +18,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://yipgikbasudyog:21d1ee6803375
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+upvote = 0
+
 @app.route('/')
 def hello():
     return "Hello World1!"
@@ -46,11 +48,9 @@ def result_list(text):
         cur = con.cursor()
         #words = text.split(",")
         #text = request.data
-        print("TExt:",text)
         #dart = json.loads(text)
         #uid = dart["userId"]
         uid = text
-        print(uid)
         #uid = words[0]
         currentUid = (uid,)
         uid = str(uid)
@@ -78,23 +78,20 @@ def get_result_list():
         cur = con.cursor()
         text = request.args.get('userId')
         result_list(text)
-        print("Text:",text)
 
-        #dart = json.loads(text)
-        #uid = dart["userId"]
         currentUid = (text,)
         cur.execute('SELECT * FROM "{}"'.format(str(text)))
         rows = cur.fetchall()
         result = []
         for row in rows:
-             #print(row,"row")
+             getGlobalVote(row[1])
              obj = {
                'id': row[0],
                'name': row[1],
                'score': row[2],
+               'upvote': upvote
              }
              result.append(obj)
-             print("OBJ: ", obj)
              response = jsonify(result)
              response.status_code = 200
         return response
@@ -193,7 +190,7 @@ def getCourse():
         cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = name", currentCourseName)
         result = []
         for row in cur:
-             print(row,"row")
+
              obj = {
                'name': row[1],
                'description': row[2],
@@ -218,7 +215,7 @@ def getUserName():
         cur.execute("SELECT username FROM student WHERE %s = uid", currentUID)
         result = []
         for row in cur:
-             print(row,"row")
+
              obj = {
                'username': row[0],
              }
@@ -237,7 +234,7 @@ def postVote():
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         text = request.data
-        print(text)
+
         dart = json.loads(text)
         vote = dart["upvote"]
         currentVote = (vote,)
@@ -262,12 +259,34 @@ def getVote():
         cur.execute("SELECT upvote FROM course WHERE %s = name", currentCourseName)
         result = []
         for row in cur:
-             print(row,"row")
              obj = {
                'upvote': row[0],
              }
              result.append(obj)
-             print (obj)
+             response = jsonify(result = obj)
+             response.status_code = 200
+             return response
+
+    finally:
+        if con:
+            con.close()
+def getGlobalVote(name):
+    con = None
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        courseName = name
+        currentCourseName = (courseName,)
+        cur.execute("SELECT upvote FROM course WHERE %s = name", currentCourseName)
+        result = []
+        for row in cur:
+             obj = {
+               'upvote': row[0],
+             }
+             global upvote
+             upvote = obj["upvote"]
+             result.append(obj)
+
              response = jsonify(result = obj)
              response.status_code = 200
              return response
@@ -287,7 +306,6 @@ def getProfileURL():
          cur.execute("SELECT profile_pic FROM student WHERE %s = uid", currentUID)
          result = []
          for row in cur:
-              print(row,"row")
               obj = {
                 'username': row[0],
               }
@@ -319,6 +337,7 @@ def postProfileURL():
     finally:
         if con:
             con.close()
+
 
 if __name__ == '__main__':
           port = 5000 #the custom port you want
