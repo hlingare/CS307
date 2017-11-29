@@ -178,8 +178,6 @@ def updateUsername():
         response.status_code = 200
         return response
     finally:
-
-
         if con:
             con.close()
 
@@ -274,6 +272,50 @@ def getVote():
              response.status_code = 200
              return response
 
+    finally:
+        if con:
+            con.close()
+
+@app.route('/getProfileURL', methods = ['GET'])
+def getProfileURL():
+     con = None
+     try:
+         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+         cur = con.cursor()
+         uid = request.args.get('uid')
+         currentUID = (uid,)
+         cur.execute("SELECT profile_pic FROM student WHERE %s = uid", currentUID)
+         result = []
+         for row in cur:
+              print(row,"row")
+              obj = {
+                'username': row[0],
+              }
+              result.append(obj)
+              response = jsonify(result)
+              response.status_code = 200
+              return response
+     finally:
+         if con:
+             con.close()
+
+@app.route('/postProfileURL')
+def postProfileURL():
+    con = None
+    taken_course = []
+    option = []
+    try:
+        con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
+        cur = con.cursor()
+        text = request.data
+        dart = json.loads(text)
+        uid = dart["userID"]
+        currentUid = (uid,)
+        profileId = dart["profileID"]
+        cur.execute("UPDATE student SET profile_pic = %s WHERE uid = %s", (profileId, currentUid,))
+        con.commit()
+        response.status_code = 200
+        return response
     finally:
         if con:
             con.close()
