@@ -39,11 +39,6 @@ function postCourseData(userIdAuth0,Coursename,performance) {
   axios.post(url, {
       userId: userIdAuth0,
       course_name: Coursename,
-<<<<<<< HEAD
-      option: performance
-=======
-      option: Number1
->>>>>>> 284615dc2bbab1a381fdf5221a6f48ae381bd25d
 })
 .then(function (response) {
 console.log(response);

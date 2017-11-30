@@ -103,7 +103,6 @@ componentDidMount() {
     alert("Course Was Added");
   }
 
-<<<<<<< HEAD
   checkCourse()
   {
       if (document.getElementById('FileName').value==""|| document.getElementById('FileName').value==undefined)
@@ -116,8 +115,6 @@ componentDidMount() {
       alert("Course "+document.getElementById('FileName').value+" has been added!!");
       return true;
   }
-=======
->>>>>>> 284615dc2bbab1a381fdf5221a6f48ae381bd25d
 
   render() {
     const uploadOptions = {
