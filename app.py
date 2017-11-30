@@ -173,9 +173,9 @@ def courseInfo():
             return "Course Exists!!"
         C = reads[0][2]
         D = reads[0][3]
-        print("options: ", D)
+        #print("options: ", D)
         E = []
-        print("ROWS ", rows)
+        #print("ROWS ", rows)
         cur.execute("SELECT options FROM course WHERE %s = name",currentCourse)
         cols = cur.fetchone()[0]
         con.commit()
@@ -219,7 +219,7 @@ def updateUsername():
 
 @app.route('/getCourse', methods = ['GET'])
 def getCourse():
-    print("GETCOURSE")
+    #print("GETCOURSE")
     con = None
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
@@ -232,7 +232,7 @@ def getCourse():
         result = []
         optionsArr = []
         for col in rows:
-            print("COL: ", col[5])
+            #print("COL: ", col[5])
             optionsArr = col[5]
         sum = 0
         for i in range(0,len(optionsArr)):
@@ -242,16 +242,16 @@ def getCourse():
 
         sum = round(sum,3)
 
-        print("SUM: ",sum)
+        #print("SUM: ",sum)
         avgGrade = "B"
         if sum >= 11 and sum <= 11.667:
             avgGrade = "C"
         if sum > 11.667 and sum <= 12.334:
             avgGrade = "B"
         if sum > 12.334:
-            print("A")
+            #print("A")
             avgGrade = "A"
-        print("AVERAGE GRADE: ", avgGrade)
+        #print("AVERAGE GRADE: ", avgGrade)
 
         cur.execute("UPDATE course SET grade = %s WHERE %s = name", (avgGrade, currentCourseName, ))
         #con.commit()
