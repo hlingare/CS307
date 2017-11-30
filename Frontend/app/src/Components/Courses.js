@@ -50,7 +50,6 @@ class Courses extends Component {
   				shortname="courserec"
   				identifier={this.state.name}
   				title={this.state.name}
-          category_id="123456"
   				onNewComment={this.handleNewComment}
      />
 
