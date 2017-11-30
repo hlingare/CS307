@@ -143,11 +143,15 @@ def course_list(id_stud):
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         temps = (id_stud, )
+        #print("IDSTUD: ", id_stud)
         cur.execute("SELECT taken_course FROM student WHERE %s = uid", temps)
         rows = cur.fetchall()
         temp = []
+        #print("ROWS: ", rows)
+        #print("TEMPS: ", temps)
         for row in rows:
             temp.append(list(row))
+        #print("TEMP: ", temp)
         courses = []
         for i in range(0,len(temp[0][0])):
             courses.append(temp[0][0][i])

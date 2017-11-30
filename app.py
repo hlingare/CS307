@@ -67,12 +67,13 @@ def result_list(text):
         currentUid = (uid,)
         uid = str(uid)
 
+        #print("UID in result list: ",uid)
 
-        clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
         courseList, options = course_list(uid)
         data_train = training_data(courseList)
         norm_data = normalize(data_train,options)
         n_neighbors = len(norm_data)
+        clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
         training(norm_data, clf)
         pred = predict_data()
         distances = predicts(pred, clf)
@@ -92,10 +93,6 @@ def get_result_list():
         text = request.args.get('userId')
         result_list(text)
 
-
-
-
-
         currentUid = (text,)
         cur.execute('SELECT * FROM "{}"'.format(str(text)))
         rows = cur.fetchall()
@@ -109,9 +106,6 @@ def get_result_list():
                'upvote': upvote
              }
              result.append(obj)
-
-
-
 
              response = jsonify(result)
              #response.status_code = 200
