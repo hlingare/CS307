@@ -25,7 +25,7 @@ def normalize(X, Y):
 def ml_train(X, clf):
     #X = normalize(X, option)
     #Training Session
-    print("clf: ", clf)
+    #print("clf: ", clf)
     y= []
     train = []
     X1 = []
@@ -40,15 +40,15 @@ def ml_train(X, clf):
     train = X1 + X2
     y=y_0 + y_1
     clf.fit(train, y)
-    print("Training Complete")
+    #print("Training Complete")
 
 def ml_distances(X,clf):
-    print("prediction: ", X)
+    #print("prediction: ", X)
     distances, indexes = clf.kneighbors(X)
     for i in range(0,len(X)):
         X[i].append(distances[i][0])
     distances = sorted(X,key=itemgetter(5))
-    print("distances: ", distances)
+    #print("distances: ", distances)
     return distances
 
 def run_avg(X, a):
