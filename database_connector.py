@@ -97,8 +97,8 @@ def clear(X, option):
                 rows_deleted = rows_deleted + 1
             conn.commit()
             cur.close()
-            print(rows_deleted)
-            print(cur.rowcount)
+            #print(rows_deleted)
+            #print(cur.rowcount)
     finally:
         if (conn is not None):
             conn.close()
@@ -120,12 +120,14 @@ def training_data(course_list):
             traits = []
             course_name = course_list[i].lower()
             temps = (course_name,)
+            #print("name: ", temps)
             cur.execute("SELECT trait FROM course WHERE %s = name", temps)
             rows = cur.fetchall()
             temp = []
             for row in rows:
                 temp.append(list(row))
             traits = []
+            #print("temp: ", temp)
             for j in range(0,len(temp[0][0])):
                 traits.append(int(temp[0][0][j]))
             fin_traits.append(traits)
@@ -218,7 +220,7 @@ def create_uid(uid, course_list):
         cur.execute(query)
         conn.commit()
         for i in range(0, len(names)):
-            print(names[i])
+            #print(names[i])
             querry = ('INSERT INTO "{}"(ID, name, score) VALUES (%s, %s, %s)'.format(str(uid)))
             cur.execute(querry, (i, names[i], scores[i]))
         conn.commit()

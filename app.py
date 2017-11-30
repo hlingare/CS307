@@ -18,7 +18,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://yipgikbasudyog:21d1ee6803375
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 upvote = 0
+
+
+
 
 @app.route('/')
 def hello():
@@ -48,14 +52,22 @@ def result_list(text):
         cur = con.cursor()
         #words = text.split(",")
         #text = request.data
+
+
+
+
+
+        #print("TExt:",text)
         #dart = json.loads(text)
         #uid = dart["userId"]
         uid = text
+        #print(uid)
+
         #uid = words[0]
         currentUid = (uid,)
         uid = str(uid)
 
-        n_neighbors = 1
+        n_neighbors = 3
         clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
         courseList, options = course_list(uid)
         data_train = training_data(courseList)
@@ -79,6 +91,10 @@ def get_result_list():
         text = request.args.get('userId')
         result_list(text)
 
+
+
+
+
         currentUid = (text,)
         cur.execute('SELECT * FROM "{}"'.format(str(text)))
         rows = cur.fetchall()
@@ -87,13 +103,17 @@ def get_result_list():
              getGlobalVote(row[1])
              obj = {
                'id': row[0],
-               'name': row[1],
+               'title': row[1],
                'score': row[2],
                'upvote': upvote
              }
              result.append(obj)
+
+
+
+
              response = jsonify(result)
-             response.status_code = 200
+             #response.status_code = 200
         return response
     finally:
          if con:
@@ -131,8 +151,10 @@ def courseInfo():
         options = dart["option"]
         currentUID = (uid,)
         course_name = dart["course_name"]
+        currentCourse = (course_name,)
         cur.execute("SELECT * FROM student WHERE %s = uid",currentUID)
         rows = cur.fetchall()
+        con.commit()
         temp = []
         for row in rows:
              temp.append(list(row))
@@ -151,8 +173,25 @@ def courseInfo():
             return "Course Exists!!"
         C = reads[0][2]
         D = reads[0][3]
+        print("options: ", D)
+        E = []
+        print("ROWS ", rows)
+        cur.execute("SELECT options FROM course WHERE %s = name",currentCourse)
+        cols = cur.fetchone()[0]
+        con.commit()
         cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
         cur.execute("UPDATE student SET option = %s WHERE %s = uid",(D,str(uid), ))
+        con.commit()
+
+        #print("COLS ",cols)
+        #print("cols len: ", len(cols))
+        E = cols
+        #print("E: ",E)
+
+        E.append((D[len(D) - 1]))
+        #print("E AFTER APPEND: ",E)
+
+        cur.execute("UPDATE course SET options = %s WHERE %s = name",(E,course_name,))
 
         con.commit()
         return reads
@@ -178,25 +217,57 @@ def updateUsername():
         if con:
             con.close()
 
-
 @app.route('/getCourse', methods = ['GET'])
 def getCourse():
+    print("GETCOURSE")
     con = None
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
+        #cur1 = con.cursor()
         courseName =  request.args.get('coursename')
         currentCourseName = (courseName,)
-        cur.execute("SELECT idcourse,name,description,professor,timings FROM course WHERE %s = name", currentCourseName)
+        cur.execute("SELECT idcourse,name,description,professor,timings,options,grade FROM course WHERE %s = name", currentCourseName)
+        rows = cur.fetchall()
         result = []
-        for row in cur:
+        optionsArr = []
+        for col in rows:
+            print("COL: ", col[5])
+            optionsArr = col[5]
+        sum = 0
+        for i in range(0,len(optionsArr)):
+            sum += float(optionsArr[i])
+        if len(optionsArr) > 0:
+            sum = sum / len(optionsArr)
 
+        sum = round(sum,3)
+
+        print("SUM: ",sum)
+        avgGrade = "B"
+        if sum >= 11 and sum <= 11.667:
+            avgGrade = "C"
+        if sum > 11.667 and sum <= 12.334:
+            avgGrade = "B"
+        if sum > 12.334:
+            print("A")
+            avgGrade = "A"
+        print("AVERAGE GRADE: ", avgGrade)
+
+        cur.execute("UPDATE course SET grade = %s WHERE %s = name", (avgGrade, currentCourseName, ))
+        #con.commit()
+        cur.execute("SELECT idcourse,name,description,professor,timings,options,grade FROM course WHERE %s = name", currentCourseName)
+        con.commit()
+
+        for row in rows:
+             #print(row,"row")
              obj = {
                'name': row[1],
                'description': row[2],
                'professor': row[3],
                'timings': row[4],
+               'grade': row[6]
              }
+             con.commit()
              result.append(obj)
              response = jsonify(result = obj)
              response.status_code = 200
@@ -234,7 +305,7 @@ def postVote():
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         text = request.data
-
+        #print(text)
         dart = json.loads(text)
         vote = dart["upvote"]
         currentVote = (vote,)
@@ -259,10 +330,12 @@ def getVote():
         cur.execute("SELECT upvote FROM course WHERE %s = name", currentCourseName)
         result = []
         for row in cur:
+             #print(row,"row")
              obj = {
                'upvote': row[0],
              }
              result.append(obj)
+             #print (obj)
              response = jsonify(result = obj)
              response.status_code = 200
              return response
