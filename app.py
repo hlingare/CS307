@@ -67,11 +67,12 @@ def result_list(text):
         currentUid = (uid,)
         uid = str(uid)
 
-        n_neighbors = 3
+
         clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
         courseList, options = course_list(uid)
         data_train = training_data(courseList)
         norm_data = normalize(data_train,options)
+        n_neighbors = len(norm_data)
         training(norm_data, clf)
         pred = predict_data()
         distances = predicts(pred, clf)
@@ -134,6 +135,7 @@ def studentinfo():
         query = "INSERT INTO student (uid, username, taken_course, option) VALUES (%s, %s, %s, %s)"
         cur.execute(query, (uid, username, taken_course, option))
         con.commit()
+
         response.status_code = 200
         return response
     finally:
