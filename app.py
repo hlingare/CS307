@@ -101,7 +101,7 @@ def get_result_list():
              getGlobalVote(row[1])
              obj = {
                'id': row[0],
-               'title': row[1],
+               'name': row[1],
                'score': row[2],
                'upvote': upvote
              }
