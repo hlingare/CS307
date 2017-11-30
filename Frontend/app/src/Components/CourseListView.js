@@ -27,6 +27,7 @@ class CourseListView extends Component {
   getCourseData().then((courses) => {
     this.setState({ courses });
   });
+
 }
 
 componentDidMount() {
@@ -44,6 +45,7 @@ sort() {
 
   render() {
     const { courses }  = this.state;
+    console.log(courses);
      const filteredCourses = courses.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
     return (
