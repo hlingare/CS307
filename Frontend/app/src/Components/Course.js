@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Button } from 'react-bootstrap';
 import history from '../history';
 import { postVote,getVote } from '../utils/api';
+import '../styles/CourseUpVoteDown.css';
 
 class Course extends Component {
 
@@ -54,20 +55,26 @@ class Course extends Component {
   render() {
     return(
       <div>
-      <span onClick={() => this.listcourse(this.props.title)}>{this.props.title}</span>
+      <label bsStyle="namelabel" className="namelabel" onClick={() => this.listcourse(this.props.title)}>{this.props.title}</label>
       <span className="recommend">{this.props.score}</span>
-        <Button
+      <Button
+          bsStyle="upvote" className="upvote"
           label="Upvote"
           disabled={this.state.disabledUpvote}
-          onClick={this.handleUpvoteClicked} >
+          onClick={this.handleUpvoteClicked}>
+          +
       </Button>
+
       <Button
+        bsStyle="downvote" className="downvote"
         label="Downvote"
         disabled={this.state.disabledDownvote}
         onClick={this.handleDownvoteClicked}>
-        </Button>
-        <span>{this.state.votes}</span>
-        </div>
+        -
+      </Button>
+
+        <label>{this.state.votes}</label>
+    </div>
     )
   }
 }

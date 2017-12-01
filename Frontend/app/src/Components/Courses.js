@@ -59,6 +59,7 @@ class Courses extends Component {
         <button onClick={this.myFunction1.bind(this,"")}>Click me</button>
       </div>
 
+      <div className="container1">
       <div>
         <br/>
         <h4><label className="label2" >Course Description: </label></h4>
@@ -71,6 +72,9 @@ class Courses extends Component {
         <label className="label1">{this.state.timings}</label>
         <h4><label className="label2" >Average Grade: </label></h4>
         <label className="label1">{this.state.grade}</label>
+        <h4><label className="label2" >Predicted Grade: </label></h4>
+        <label className="label1">{this.state.grade}</label>
+      </div>
       </div>
       <ReactDisqusComments
           style={{padding: "30px"}}
