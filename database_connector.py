@@ -222,7 +222,7 @@ def create_uid(uid, course_list):
         conn.commit()
         for i in range(0, len(fin_list)):
             querry = ('INSERT INTO "{}"(ID, name, score, predGrade) VALUES (%s, %s, %s, %s)'.format(str(uid)))
-            pGrade = ((17 - int(fin_list[i][1])) / 17) * 100
+            pGrade = ((50 - int(fin_list[i][1])) / 50) * 100
             cur.execute(querry, (i, fin_list[i][0], fin_list[i][1],pGrade))
         for i in range(0, len(fin_list)):
             print("changed list: ", fin_list[i][0])
