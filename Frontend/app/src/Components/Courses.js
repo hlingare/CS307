@@ -36,7 +36,7 @@ class Courses extends Component {
         name: courseDescription.result.name,
         timings: courseDescription.result.timings,
         professor: courseDescription.result.professor,
-        grade: courseDescription.result.grade,
+        grade: courseDescription.result.avgGrade,
       });
     });
 
