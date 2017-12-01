@@ -40,8 +40,8 @@ sort() {
   const myData = [].concat(this.state.courses)
     .sort((a, b) => b.upvote - a.upvote)
     this.setState({courses: myData})
-
 }
+
 
   render() {
     const { courses }  = this.state;
@@ -54,22 +54,40 @@ sort() {
         <Nav auth={this.auth} {...this.props}  />
         <h3 className="text-center">Courses</h3>
           </div>
-          <div className="list">
-        <SearchInput className="search-input" onChange={this.searchUpdated} />
-        <button><img src={require('./caret-arrow-up.png')} alt="sort ascending" onClick={this.sort} /></button>
+          <span className="header">
+          <SearchInput className="search-input" onChange={this.searchUpdated} />
+            <button className="button"><img src={require('./caret-arrow-up.png')} alt="sort ascending" onClick={this.sort} /></button>
+            </span>
+            <div class="tbl-header">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>Vote</th>
+            <th>vote Score</th>
+            <th>Recommendation Score</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="tbl-content">
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tbody>
         { filteredCourses.map((course, index) => (
-              <div className="courseName" key={course.id}>
-              <span>
+              <tr key={course.id}>
+                <td>
                 <Course
                   title={course.name}
                   score={course.score}
                 >
                 </Course>
-              </span>
-            </div>
+                </td>
+                </tr>
           ))}
+        </tbody>
+      </table>
           </div>
-          </div>
+            </div>
     );
   }
 }

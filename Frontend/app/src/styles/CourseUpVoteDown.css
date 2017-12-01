@@ -1,18 +1,29 @@
+.con {
+  flex: 1;
+}
 .upvote {
     color: #333;
     background-color: green;
-    margin-right: 10px;
-    border-color: green;
+    border-color: black;
+    background-color: rgba(255,255,255,0.3);
+    margin-right: 2px;
 }
 
 .downvote {
     color: #333;
-    background-color: red;
-    margin-right: 10px;
-    border-color: red;
+    background-color: rgba(255,255,255,0.3);
+    border-color: black;
 }
 
 .namelabel {
-    min-width: 80px;
-    margin-right: 10px;
+  min-width: 80px;
+  margin-left: 37px;
+  text-align-last: left;
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+  text-align: center;
+  margin: 14px 329px 20px 1px;
+  font-size: 18px;
+  cursor: auto;
 }

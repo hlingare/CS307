@@ -36,6 +36,13 @@ class Course extends Component {
   }
   }
 
+  sort() {
+    const myData = [].concat(this.state.courses)
+      .sort((a, b) => b.upvote - a.upvote)
+      this.setState({courses: myData})
+
+  }
+
   listcourse(title) {
    history.push({
     pathname: '/listcourse',
@@ -54,9 +61,8 @@ class Course extends Component {
 
   render() {
     return(
-      <div>
-      <label bsStyle="namelabel" className="namelabel" onClick={() => this.listcourse(this.props.title)}>{this.props.title}</label>
-      <span className="recommend">{this.props.score}</span>
+      <div className = "con">
+      <span  className="namelabel" onClick={() => this.listcourse(this.props.title)}>{this.props.title}</span>
       <Button
           bsStyle="upvote" className="upvote"
           label="Upvote"
@@ -72,8 +78,8 @@ class Course extends Component {
         onClick={this.handleDownvoteClicked}>
         -
       </Button>
-
-        <label>{this.state.votes}</label>
+        <span className="vote">{this.state.votes}</span>
+        <span className="recommend">{this.props.score}</span>
     </div>
     )
   }

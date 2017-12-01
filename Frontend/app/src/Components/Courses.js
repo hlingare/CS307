@@ -56,7 +56,7 @@ class Courses extends Component {
 
       <div className="container">
         <h3 className="text-center">{this.state.name.toUpperCase()}</h3>
-        <button onClick={this.myFunction1.bind(this,"")}>Click me</button>
+        <button className="button" onClick={this.myFunction1.bind(this,"")}>Share</button>
       </div>
 
       <div className="container1">
