@@ -3,9 +3,9 @@ from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_cors import CORS
-from database_connector import read, course_list, training_data, training, predicts, create_uid, predict_data
-from machine_learning_service import ml_train, normalize
-from sklearn import neighbors
+from database_connector import course_list, training_data, training, predicts, create_uid, predict_data
+from machine_learning_no_data import ml_train_no, ml_predict_no
+from sklearn.neighbors import NearestNeighbors
 import psycopg2
 from flask import request
 import json
@@ -50,6 +50,7 @@ def result_list(text):
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
+<<<<<<< HEAD
         #words = text.split(",")
         #text = request.data
 
@@ -69,19 +70,43 @@ def result_list(text):
 
         #print("UID in result list: ",uid)
 
+=======
+        uid = text
+        currentUid = (uid,)
+        uid = str(uid)
+>>>>>>> Changes in Machine Learning added No Data Machine Learning
         courseList, options = course_list(uid)
+        if (len(courseList) == 0):
+            list_course = list_courses()
+            ids = []
+            for i in range(0, len(list_course)):
+                ids.append(i)
+            ml_train_no(ids)
+            names, preds = ml_predict_no(ids, list_course)
+            no_data_db(text, names, preds)
+            return 
+        print("courseList: ", courseList)
+        print("options: ", options)
         data_train = training_data(courseList)
+        pred = predict_data(data_train)
+        print("data_train: ", data_train)
         norm_data = normalize(data_train,options)
+<<<<<<< HEAD
         n_neighbors = len(norm_data)
         clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
+=======
+        print("normalized data: ", norm_data)
+        n_neighbors = len(norm_data)
+        print("n_neighbors: ", n_neighbors)
+        clf = NearestNeighbors(n_neighbors,  algorithm = 'kd_tree')
+>>>>>>> Changes in Machine Learning added No Data Machine Learning
         training(norm_data, clf)
-        pred = predict_data()
         distances = predicts(pred, clf)
         create_uid(uid, distances)
         return distances
     finally:
         if con:
-            con.close()
+            con.close() 
 
 @app.route('/get_result_list',methods=['GET'])
 def get_result_list():
@@ -169,12 +194,17 @@ def courseInfo():
             return "Course Exists!!"
         C = reads[0][2]
         D = reads[0][3]
+<<<<<<< HEAD
         #print("options: ", D)
         E = []
         #print("ROWS ", rows)
         cur.execute("SELECT options FROM course WHERE %s = name",currentCourse)
         cols = cur.fetchone()[0]
         con.commit()
+=======
+        
+        print("")
+>>>>>>> Changes in Machine Learning added No Data Machine Learning
         cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
         cur.execute("UPDATE student SET option = %s WHERE %s = uid",(D,str(uid), ))
         con.commit()

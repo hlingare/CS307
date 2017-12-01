@@ -9,20 +9,22 @@ from random import randint
 from sklearn import neighbors
 from operator import itemgetter
 
+
 def normalize(X, Y):
     for i in range (0, len(Y)):
-        if (Y[i]) == 11:
+        if (int(Y[i])) == 11:
             for j in range(0, len(X[i])):
-                X[i][j] = X[i][j] - 4
-        if (Y[i]) == 12:
+                X[i][j] = X[i][j] - 10
+        if (int(Y[i])) == 12:
             for j in range(0, len(X[i])):
-                X[i][j] = X[i][j] - 2
-        if (Y[i]) == 13:
+                X[i][j] = X[i][j]
+        if (int(Y[i])) == 13:
             for j in range(0, len(X[i])):
-                X[i][j] = X[i][j] - 0
+                X[i][j] = X[i][j] + 10
     return X
 
 def ml_train(X, clf):
+<<<<<<< HEAD
     #X = normalize(X, option)
     #Training Session
     #print("clf: ", clf)
@@ -50,6 +52,19 @@ def ml_distances(X,clf):
     distances = sorted(X,key=itemgetter(5))
     #print("distances: ", distances)
     return distances
+=======
+    clf.fit(X)
+    print("Training Complete")
+
+def ml_distances(X,clf):
+    distances, indexes = clf.kneighbors(X)
+    for i in range(0,len(X)):
+        X[i].append(distances[i][0])
+    #distances = X
+    distance = list(sorted(X,key=itemgetter(5)))
+    print(distance)
+    return distance
+>>>>>>> Changes in Machine Learning added No Data Machine Learning
 
 def run_avg(X, a):
     y = []
