@@ -8,10 +8,12 @@ from random import randint
 from machine_learning_service import normalize, ml_train, ml_distances
 from machine_learning_no_data import ml_train_no, ml_predict_no
 from sklearn.neighbors import NearestNeighbors
+from operator import itemgetter
+
 
 def add_course(id_stud, course_name, options):
     con = None
-    try:         
+    try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
         temps = (id_stud, )
@@ -25,56 +27,50 @@ def add_course(id_stud, course_name, options):
             temps = []
             for j in range(0, len(temp[i])):
                 temps.append(temp[i][j])
-            reads.append(temps)      
-        
+            reads.append(temps)
+
         if (len(reads) == 0):
             return "ERROR"
         if course_name not in reads[0][2]:
             reads[0][2].append(course_name)
             reads[0][3].append(options)
-        else: 
+        else:
             return "Course Exists!!"
-        
+
         C = reads[0][2]
         D = reads[0][3]
-        
+
         print("D: ", D)
         E = []
         E.append( D[len(D) - 1])
-        
+
         cur.execute("update student SET taken_course = %s WHERE uid = %s", (C, str(id_stud), ))
         cur.execute("update student SET option = %s WHERE uid = %s", (D, str(id_stud), ))
         cur.execute("update course SET options = %s WHERE name = %s", (E, str(course_name), ))
         con.commit()
         print("reads: ", reads)
         return reads
-    finally:        
+    finally:
         if con:
             con.close()
 
 def create(option):
     if (option == 0):
-        try: 
+        try:
             conn = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
             cur = conn.cursor()
             cur.execute("DROP TABLE IF EXISTS student")
             cur.execute("CREATE TABLE student(UID Int PRIMARY KEY NOT NULL, username text, name text, taken_course text[], option text[])")
             conn.commit()
             cur.close()
-<<<<<<< HEAD
-            #print(rows_deleted)
-            #print(cur.rowcount)
-    finally:
-        if (conn is not None):
-            conn.close()
-=======
+
         finally:
              if (conn is not None):
                 conn.close()
         return "done"
     return "error"
 
->>>>>>> Changes in Machine Learning added No Data Machine Learning
+
 
 def training(train_data, clf):
     ml_train(train_data, clf)
@@ -250,15 +246,10 @@ def no_data_db(uid, names, preds):
         cur.execute(query)
         conn.commit()
         for i in range(0, len(names)):
-<<<<<<< HEAD
-            #print(names[i])
-            querry = ('INSERT INTO "{}"(ID, name, score) VALUES (%s, %s, %s)'.format(str(uid)))
-            cur.execute(querry, (i, names[i], scores[i]))
-=======
             querry = ('INSERT INTO "{}"(ID, name, score, predGrade) VALUES (%s, %s, %s, %s)'.format(str(uid)))
             pGrade = 0
             cur.execute(querry, (i, names[i], 0, pGrade))
->>>>>>> Changes in Machine Learning added No Data Machine Learning
+
         conn.commit()
         cur.close()
     finally:
@@ -283,7 +274,7 @@ def testing(text):
             ml_train_no(ids)
             names, preds = ml_predict_no(ids, list_course)
             no_data_db(text, names, preds)
-            return 
+            return
         print("courseList: ", courseList)
         print("options: ", options)
         data_train = training_data(courseList)
@@ -300,4 +291,4 @@ def testing(text):
         return distances
     finally:
         if con:
-            con.close() 
+            con.close()
