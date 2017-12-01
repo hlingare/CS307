@@ -73,7 +73,7 @@ class Courses extends Component {
         <h4><label className="label2" >Average Grade: </label></h4>
         <label className="label1">{this.state.grade}</label>
         <h4><label className="label2" >Predicted Grade: </label></h4>
-        <label className="label1">{this.state.grade}</label>
+        <label className="label1">{this.props.location.state.grade}</label>
       </div>
       </div>
       <ReactDisqusComments

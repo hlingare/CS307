@@ -46,7 +46,10 @@ class Course extends Component {
   listcourse(title) {
    history.push({
     pathname: '/listcourse',
-    state: { detail: title }
+    state: {
+      detail: title,
+      grade: this.props.grade
+    }
    })
     }
 
