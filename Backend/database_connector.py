@@ -148,8 +148,10 @@ def testing():
     #User Data
     name_table()
     write(train_data, course_name, 0)
-    norm_data = read(train_data, 0)
+    print(train_data)
+    norm_data = read(train_data)
     #print(norm_data)
+    print("norm data: ", norm_data)
     ml_train(norm_data, clf)
     
     #Prediction 
@@ -177,4 +179,4 @@ def testing():
         else:
             print("No: ", predict_data[i])
         
-#testing()
+testing()

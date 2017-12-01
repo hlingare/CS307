@@ -3,14 +3,17 @@ from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_cors import CORS
-from database_connector import read, course_list, training_data, training, predicts, create_uid, predict_data
-from machine_learning_service import ml_train, normalize
-from sklearn import neighbors
+from database_connector import course_list, training_data, training, predicts, create_uid, predict_data
+from machine_learning_service import ml_train, ml_distances, normalize
+from machine_learning_no_data import ml_train_no, ml_predict_no
+from sklearn.neighbors import NearestNeighbors
 import psycopg2
 from flask import request
 import json
 from json import JSONEncoder
 from json import JSONDecoder
+from operator import itemgetter
+
 
 app = Flask(__name__)
 CORS(app)
@@ -50,32 +53,30 @@ def result_list(text):
     try:
         con = psycopg2.connect(host = 'ec2-54-163-229-169.compute-1.amazonaws.com', database = 'df5g8vla4snv52', user = 'yipgikbasudyog', password = '21d1ee6803375e19da2ed3cfc8c726f036e3e11871d62b65df13134be5c69ec2')
         cur = con.cursor()
-        #words = text.split(",")
-        #text = request.data
-
-
-
-
-
-        #print("TExt:",text)
-        #dart = json.loads(text)
-        #uid = dart["userId"]
         uid = text
-        #print(uid)
-
-        #uid = words[0]
         currentUid = (uid,)
         uid = str(uid)
-
-        #print("UID in result list: ",uid)
-
         courseList, options = course_list(uid)
+        if (len(courseList) == 0):
+            list_course = list_courses()
+            ids = []
+            for i in range(0, len(list_course)):
+                ids.append(i)
+            ml_train_no(ids)
+            names, preds = ml_predict_no(ids, list_course)
+            no_data_db(text, names, preds)
+            return
+        #print("courseList: ", courseList)
+        #print("options: ", options)
         data_train = training_data(courseList)
+        pred = predict_data(data_train)
+        #print("data_train: ", data_train)
         norm_data = normalize(data_train,options)
+        #print("normalized data: ", norm_data)
         n_neighbors = len(norm_data)
-        clf = neighbors.KNeighborsClassifier(n_neighbors, weights = 'uniform')
+        #print("n_neighbors: ", n_neighbors)
+        clf = NearestNeighbors(n_neighbors,  algorithm = 'kd_tree')
         training(norm_data, clf)
-        pred = predict_data()
         distances = predicts(pred, clf)
         create_uid(uid, distances)
         return distances
@@ -96,18 +97,35 @@ def get_result_list():
         currentUid = (text,)
         cur.execute('SELECT * FROM "{}"'.format(str(text)))
         rows = cur.fetchall()
+
         result = []
         for row in rows:
-             getGlobalVote(row[1])
-             obj = {
+            grade = row[3]
+            predGrade = "B"
+            if grade >= 90:
+                predGrade = "A"
+            if grade >= 80 and grade < 90:
+                predGrade = "B"
+            if grade >= 70 and grade < 80:
+                #print("A")
+                predGrade = "C"
+            if grade >= 60 and grade < 70:
+                    #print("A")
+                predGrade = "D"
+            if grade < 60 :
+                #print("A")
+                predGrade = "F"
+            getGlobalVote(row[1])
+            obj = {
                'id': row[0],
                'name': row[1],
                'score': row[2],
-               'upvote': upvote
-             }
-             result.append(obj)
+               'upvote': upvote,
+               'grade': predGrade
+            }
+            result.append(obj)
 
-             response = jsonify(result)
+            response = jsonify(result)
              #response.status_code = 200
         return response
     finally:
@@ -169,12 +187,14 @@ def courseInfo():
             return "Course Exists!!"
         C = reads[0][2]
         D = reads[0][3]
+
         #print("options: ", D)
         E = []
         #print("ROWS ", rows)
         cur.execute("SELECT options FROM course WHERE %s = name",currentCourse)
         cols = cur.fetchone()[0]
         con.commit()
+
         cur.execute("UPDATE student SET taken_course = %s WHERE %s = uid",(C,str(uid), ))
         cur.execute("UPDATE student SET option = %s WHERE %s = uid",(D,str(uid), ))
         con.commit()
