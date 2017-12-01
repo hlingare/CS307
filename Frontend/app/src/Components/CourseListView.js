@@ -79,6 +79,7 @@ sort() {
                 <Course
                   title={course.name}
                   score={course.score}
+                  grade={course.predGrade}
                 >
                 </Course>
                 </td>
