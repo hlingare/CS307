@@ -119,7 +119,7 @@ def get_result_list():
                'name': row[1],
                'score': row[2],
                'upvote': upvote,
-               'grade': predGrade
+               'predGrade': predGrade
             }
             result.append(obj)
 
@@ -279,7 +279,7 @@ def getCourse():
                'description': row[2],
                'professor': row[3],
                'timings': row[4],
-               'grade': row[6]
+               'avgGrade': row[6]
              }
              con.commit()
              result.append(obj)
