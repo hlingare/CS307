@@ -3,7 +3,7 @@ from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_cors import CORS
-from database_connector import course_list, training_data, training, predicts, create_uid, predict_data
+from database_connector import course_list, training_data, training, predicts, create_uid, predict_data,list_courses,no_data_db
 from machine_learning_service import ml_train, ml_distances, normalize
 from machine_learning_no_data import ml_train_no, ml_predict_no
 from sklearn.neighbors import NearestNeighbors
@@ -101,20 +101,18 @@ def get_result_list():
         result = []
         for row in rows:
             grade = row[3]
+            print("GRADE: ", grade)
             predGrade = "B"
             if grade >= 90:
                 predGrade = "A"
-            if grade >= 80 and grade < 90:
+            if grade >= 60 and grade < 90:
                 predGrade = "B"
-            if grade >= 70 and grade < 80:
+            if grade >= 40 and grade < 60:
                 #print("A")
                 predGrade = "C"
-            if grade >= 60 and grade < 70:
-                    #print("A")
-                predGrade = "D"
-            if grade < 60 :
+            if grade < 40 :
                 #print("A")
-                predGrade = "F"
+                predGrade = "D"
             getGlobalVote(row[1])
             obj = {
                'id': row[0],
